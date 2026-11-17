@@ -197,7 +197,7 @@ for fname, title, sub, note in VIDEO_PICK:
     w, h = dims(poster) if poster.exists() else (None, None)
     samples.append(dict(
         id="v-" + dst.stem, kind="video", title=title, subtitle=sub,
-        model="MiniMax H3 Ref2VA", model_short="H3-Ref2VA",
+        model="MiniMax H3-Ref2VA", model_short="H3-Ref2VA",
         size="1344×768", aspect="16:9", seed=None, seconds=2.3, frames=52,
         prompt=r.get("txt", "").strip(), prompt_lang="zh", lang_label="中文提示词",
         note=note, tags=["视频", "动作", "运镜"],
@@ -208,7 +208,12 @@ for fname, title, sub, note in VIDEO_PICK:
 
 out = ROOT / "data/samples.json"
 out.parent.mkdir(exist_ok=True)
-json.dump(samples, out.open("w", encoding="utf-8"), ensure_ascii=False, indent=1)
+payload = {
+    "updated": "2026-11-17",
+    "models": sorted({s["model"] for s in samples}),
+    "samples": samples,
+}
+json.dump(payload, out.open("w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"\n=== {len(samples)} samples ===")
 for s in samples:
     print(f"{s['id']:16s} {s['kind']:5s} {s['title']:14s} prompt={len(s['prompt']):4d} {s['media']['thumb']}")

@@ -5,19 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>提示词样本册 · x7peeps</title>
-<meta name="description" content="真实产线里的图与视频提示词样本：27 条，模型、尺寸、种子与完整提示词原样保留，每条可整段复制。">
+<meta name="description" content="真实产线里的图与视频提示词样本：模型、尺寸与完整提示词原样保留，每条可整段复制。">
 <meta name="theme-color" content="#F3F4F1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="提示词样本册 · x7peeps">
 <meta property="og:description" content="真实产线里的图与视频提示词样本，连模型、尺寸、种子和完整提示词一起公开。">
 <meta property="og:url" content="https://prompt.x7peeps.com/">
+<meta property="og:image" content="https://prompt.x7peeps.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://prompt.x7peeps.com/og.png">
 <link rel="canonical" href="https://prompt.x7peeps.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111310'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='15' font-weight='700' fill='%23F3F4F1' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   --paper:#F3F4F1; --wash:#E9EAE4; --ink:#111310; --ink-2:#43463C; --ink-3:#6E7166;
-  --rule:#D5D7CE; --rule-2:#C2C5B9; --signal:#1F3AC7; --seal:#C0281B;
+  --rule:#D5D7CE; --rule-2:#B4B8A8; --signal:#1F3AC7; --seal:#C0281B;
   --mono:"SF Mono","JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
   --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","Noto Serif SC",Georgia,"Times New Roman",serif;
   --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
@@ -27,7 +31,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
@@ -38,18 +42,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   border-bottom:1px solid var(--rule)}
 .bar-in{max-width:1680px;margin:0 auto;height:100%;padding:0 var(--pad);
   display:flex;align-items:center;gap:28px}
-.brand{font-family:var(--mono);font-size:13.5px;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+.brand{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
 .brand i{font-style:normal;color:var(--signal)}
 .brand em{font-style:normal;color:var(--ink-3);font-weight:400}
 .tabs{display:flex;align-items:center;gap:2px;margin-left:6px}
 .tabs button{height:32px;padding:0 11px;border-radius:2px;font-size:13px;color:var(--ink-2);
   display:inline-flex;align-items:center;gap:7px;transition:color .16s var(--ease),background .16s var(--ease)}
 .tabs button:hover{color:var(--ink)}
-.tabs button[aria-selected="true"]{color:var(--ink);background:var(--wash)}
-.tabs b{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-3)}
-.tabs button[aria-selected="true"] b{color:var(--signal)}
+.tabs button[aria-pressed="true"]{color:var(--ink);background:var(--wash)}
+.tabs b{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink-3)}
+.tabs button[aria-pressed="true"] b{color:var(--signal)}
 .bar-meta{margin-left:auto;display:flex;align-items:center;gap:16px;
-  font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
 
 /* ── 说明区 ─────────────────────────────────────────── */
 .intro{max-width:1680px;margin:0 auto;padding:clamp(20px,2.7vw,34px) var(--pad) 0;
@@ -58,11 +62,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .intro h1{margin:0;font-family:var(--serif);font-weight:600;
   font-size:clamp(24px,3vw,40px);line-height:1.16;letter-spacing:-.012em;text-wrap:balance}
 .intro h1 span{color:var(--signal)}
-.intro .lede{margin:0;font-size:13.5px;line-height:1.7;color:var(--ink-2);max-width:588px}
+.intro .lede{margin:0;font-size:13px;line-height:1.7;color:var(--ink-2);max-width:588px}
 .intro .lede b{font-weight:600;color:var(--ink)}
 .intro-right{padding-bottom:3px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 0;margin-top:11px;
-  font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.01em}
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.01em}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend span + span::before{content:"·";margin:0 9px;color:var(--rule-2)}
 .rule{max-width:1680px;margin:clamp(16px,2.2vw,24px) auto 0;padding:0 var(--pad)}
@@ -71,7 +75,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ── 样本网格 ───────────────────────────────────────── */
 .sheet{max-width:1680px;margin:0 auto;padding:var(--gap) var(--pad) 0;display:flex;gap:var(--gap);align-items:flex-start}
 .col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:var(--gap)}
-.s{display:block;width:100%;text-align:left;padding:0;position:relative;
+.s{display:block;width:100%;text-align:left;padding:0;position:relative;color:inherit;text-decoration:none;
   animation:rise .5s var(--ease) both}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .s-media{position:relative;background:var(--wash);overflow:hidden}
@@ -82,9 +86,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   opacity:0;transition:opacity .18s var(--ease);pointer-events:none}
 .s-kind{position:absolute;left:8px;top:8px;z-index:2;display:inline-flex;align-items:center;gap:5px;
   padding:3px 7px;background:rgba(17,19,16,.82);color:#F3F4F1;
-  font-family:var(--mono);font-size:10px;letter-spacing:.02em}
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.02em}
 .s-kind svg{width:8px;height:8px;fill:currentColor}
 .s-info{padding:9px 0 0}
+.s-go{display:block;margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.02em;transition:color .16s var(--ease)}
+.s:hover .s-go,.s:focus-visible .s-go{color:var(--signal)}
 .s-no{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
 .s-title{margin:2px 0 0;font-family:var(--serif);font-size:16.5px;font-weight:600;line-height:1.35;
   letter-spacing:-.005em}
@@ -92,18 +98,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   word-break:break-word}
 .s-prompt.zh{font-family:var(--sans);font-size:11.5px;line-height:1.6}
-.s-spec{margin:7px 0 0;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.01em}
+.s-spec{margin:7px 0 0;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.01em}
 .s-spec b{font-weight:500;color:var(--ink-2)}
 
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .empty{max-width:1680px;margin:0 auto;padding:80px var(--pad);color:var(--ink-3);
-  font-family:var(--mono);font-size:12px}
+  font-family:var(--mono);font-size:11.5px}
 
 /* ── 页脚 ───────────────────────────────────────────── */
 .foot{max-width:1680px;margin:0 auto;padding:clamp(48px,7vw,92px) var(--pad) 40px;
   display:flex;flex-wrap:wrap;gap:18px 40px;align-items:baseline;
   border-top:1px solid var(--rule);margin-top:clamp(48px,7vw,92px)}
-.foot p{margin:0;font-size:12.5px;color:var(--ink-2);max-width:56ch;line-height:1.7}
-.foot .links{margin-left:auto;display:flex;gap:22px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.foot p{margin:0;font-size:13px;color:var(--ink-2);max-width:56ch;line-height:1.7}
+.foot .links{margin-left:auto;display:flex;gap:22px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
 .foot .links a:hover{color:var(--signal)}
 
 /* ── 详情 ───────────────────────────────────────────── */
@@ -114,7 +121,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .v-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;
   color:var(--ink-2);height:32px;padding:0 2px}
 .v-back:hover{color:var(--signal)}
-.v-count{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.v-count{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
 .v-nav{margin-left:auto;display:flex;gap:4px}
 .v-nav button{width:34px;height:30px;border:1px solid var(--rule);color:var(--ink-2);
   font-family:var(--mono);font-size:13px;transition:border-color .16s var(--ease),color .16s var(--ease)}
@@ -134,15 +141,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   line-height:1.25;letter-spacing:-.012em}
 .v-sub{margin:9px 0 0;font-size:13px;color:var(--ink-2);line-height:1.7}
 .v-spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:22px 0 0;
-  background:var(--rule);border:1px solid var(--rule)}
+  background:var(--rule-2);border:1px solid var(--rule-2)}
 .v-spec div{background:var(--paper);padding:9px 10px}
-.v-spec dt{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.04em}
+.v-spec dt{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
 .v-spec dd{margin:3px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink);word-break:break-all}
 
 .pbox{margin:24px 0 0;border:1px solid var(--rule);position:relative}
 .pbox-hd{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 12px;
   border-bottom:1px solid var(--rule);background:var(--paper)}
-.pbox-hd span{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em}
+.pbox-hd span{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em}
 .pbox-hd .len{color:var(--ink-3)}
 .copy{margin-left:auto;height:26px;padding:0 11px;border:1px solid var(--ink);background:var(--ink);
   color:var(--paper);font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;
@@ -157,22 +164,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   mask-image:linear-gradient(#000 calc(100% - 26px),rgba(0,0,0,.06))}
 .pbox-more{display:none;align-items:center;gap:6px;height:0;overflow:hidden}
 .pbox.more:not(.at-end) .pbox-hd .hint{display:inline;color:var(--signal)}
-.pbox .hint{display:none;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em}
-.pbox pre.zh{font-family:var(--sans);font-size:12.5px;line-height:1.85;color:var(--ink-2)}
-.seal{position:absolute;right:10px;top:-13px;width:26px;height:26px;display:grid;place-items:center;
+.pbox .hint{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em}
+.pbox pre.zh{font-family:var(--sans);font-size:13px;line-height:1.85;color:var(--ink-2)}
+.seal{position:absolute;right:10px;bottom:-13px;width:26px;height:26px;display:grid;place-items:center;
   background:var(--paper);border:1.5px solid var(--seal);color:var(--seal);
   font-family:var(--serif);font-size:13px;line-height:1;transition:transform .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease)}
-.seal.on{transform:translateY(2px) scale(.92);color:var(--signal);border-color:var(--signal)}
+.seal.on{transform:translateY(-2px) scale(.92);color:var(--signal);border-color:var(--signal)}
 
 .v-note{margin:26px 0 0;padding-top:20px;border-top:1px solid var(--rule)}
 .v-note h3{margin:0;font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:.06em}
 .v-note p{margin:8px 0 0;font-size:13px;line-height:1.85;color:var(--ink-2)}
 .v-tags{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
-.v-tags i{font-style:normal;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);
+.v-tags i{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);
   border:1px solid var(--rule);padding:3px 7px;letter-spacing:.03em}
-.v-src{margin:18px 0 0;font-family:var(--mono);font-size:10px;color:var(--ink-3);line-height:1.7}
+.v-src{margin:18px 0 0;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.7}
 
-.noscript{max-width:1680px;margin:0 auto;padding:40px var(--pad);font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.noscript{max-width:1680px;margin:0 auto;padding:40px var(--pad);font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
 
 /* ── 响应式 ─────────────────────────────────────────── */
 @media (max-width:1100px){
@@ -189,16 +196,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .tabs button{padding:0 8px}
   .intro{padding-top:22px}
   .intro-right{display:none}
-  .v-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,50vh) minmax(0,1fr)}
+  .v-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,34vh) minmax(0,1fr)}
   .v-stage{padding:12px}
-  .v-stage img,.v-stage video{max-height:min(46vh,460px)}
+  .v-stage img,.v-stage video{max-height:min(30vh,320px)}
   .v-side{border-left:0;border-top:1px solid var(--rule)}
   .foot .links{margin-left:0}
+  /* 触控目标 ≥44px（WCAG 2.5.5） */
+  .copy{height:44px;padding:0 14px;font-size:11.5px}
+  .v-nav button{width:44px;height:44px}
+  .v-back{height:44px}
+  .tabs button{height:44px}
+  .pbox-hd{height:52px}
 }
 @media (max-width:520px){
   .tabs button b{display:none}
   .intro h1{font-size:25px}
-  .s-title{font-size:15.5px}
+  .s-title{font-size:16.5px}
   .v-spec{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){
@@ -211,10 +224,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <header class="bar">
   <div class="bar-in">
     <a class="brand" href="/">prompt<i>.</i><em>x7peeps</em></a>
-    <nav class="tabs" role="tablist" aria-label="按类型筛选">
-      <button role="tab" aria-selected="true" data-filter="all">全部 <b id="c-all">0</b></button>
-      <button role="tab" aria-selected="false" data-filter="image">图像 <b id="c-image">0</b></button>
-      <button role="tab" aria-selected="false" data-filter="video">视频 <b id="c-video">0</b></button>
+    <nav class="tabs" aria-label="按类型筛选">
+      <button type="button" aria-pressed="true" data-filter="all">全部 <b id="c-all">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="image">图像 <b id="c-image">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="video">视频 <b id="c-video">0</b></button>
     </nav>
     <div class="bar-meta"><span id="updated"></span><span id="models"></span></div>
   </div>
@@ -222,16 +235,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 <section class="intro">
   <div>
-    <h1>提示词样本册，<span id="h1-count">27</span> 条</h1>
-    <p class="lede" id="lede">真实产线的图与视频，模型、尺寸、种子和提示词都原样保留。点开可整段复制。</p>
+    <h1>提示词样本册，<span id="h1-count">—</span> 条</h1>
+    <p class="lede" id="lede">真实产线的图与视频，模型、尺寸与提示词原样保留；能给出种子的连种子一起给。点开可整段复制。</p>
   </div>
   <div class="intro-right">
     <p class="lede">没有排行榜，也没有点赞数。这里只有两件事：一条提示词写成了什么样，以及它在这一版模型上真的出来了什么。</p>
-    <div class="legend">
-      <span>MiniMax H3-Image</span>
-      <span>MiniMax H3-Ref2VA</span>
-      <span>参数在详情右栏</span>
-    </div>
+    <div class="legend" id="legend"></div>
   </div>
 </section>
 
@@ -239,7 +248,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 <noscript><p class="noscript">样本由 JavaScript 从 data/samples.json 读取渲染。请开启 JavaScript，或直接查看该 JSON 文件。</p></noscript>
 
-<main class="sheet" id="sheet" aria-label="提示词样本"></main>
+<h2 class="sr-only" id="sheet-title">全部样本</h2>
+<main class="sheet" id="sheet" aria-labelledby="sheet-title"></main>
 <p class="empty" id="empty" hidden>这个筛选下没有样本。</p>
 
 <footer class="foot">
@@ -306,11 +316,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   }
 
   function makeCard(s, i) {
-    var el = document.createElement("button");
+    var el = document.createElement("a");
     el.className = "s";
-    el.type = "button";
+    el.href = "#" + s.id;
     el.style.animationDelay = Math.min(i, 14) * 22 + "ms";
-    el.setAttribute("aria-label", s.title + "，" + (s.kind === "video" ? "视频" : "图像") + "样本");
+    el.setAttribute("aria-label", s.title + "，" + (s.kind === "video" ? "视频" : "图像") + "样本，打开查看完整提示词");
 
     var media = document.createElement("div");
     media.className = "s-media";
@@ -332,7 +342,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     info.className = "s-info";
     var no = document.createElement("div");
     no.className = "s-no";
-    no.textContent = String(i + 1).padStart(2, "0") + " / " + (s.kind === "video" ? "VIDEO" : "IMAGE");
+    no.textContent = (s.kind === "video" ? "视频" : "图像") + (s.prompt_lang === "zh" ? " · 中文提示词" : " · 英文提示词");
     var title = document.createElement("h3");
     title.className = "s-title";
     title.textContent = s.title;
@@ -344,8 +354,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     spec.innerHTML = "<b>" + s.model_short + "</b> · " + s.size + (s.seed != null ? " · seed " + s.seed : "") + (s.kind === "video" ? " · " + s.frames + " 帧" : "");
     info.append(no, title, pr, spec);
 
+    var go = document.createElement("span");
+    go.className = "s-go";
+    go.setAttribute("aria-hidden", "true");
+    go.textContent = "打开 →";
+    media.appendChild(go);
+
     el.append(media, info);
-    el.addEventListener("click", function () { open(i); });
+    el.addEventListener("click", function (e) { e.preventDefault(); open(i); });
     return el;
   }
 
@@ -357,7 +373,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   }
 
   function render() {
-    var cols = colsFor(window.innerWidth);
+    var cols = Math.max(1, Math.min(colsFor(window.innerWidth), state.list.length || 1));
     state.cols = cols;
     SHEET.textContent = "";
     $("empty").hidden = state.list.length > 0;
@@ -372,16 +388,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     var ratioOf = function (s) {
       return s.kind === "video" ? 9 / 16 : (s.aspect === "9:16" ? 16 / 9 : (s.aspect === "4:3" ? 0.75 : 9 / 16));
     };
-    // 第一行：前 cols 个各占一列，保证首屏每一列顶部是完整可见的样本
-    state.list.forEach(function (s, i) {
-      var card = makeCard(s, i);
-      if (i < cols) {
-        holders[i].el.appendChild(card);
-        holders[i].h += ratioOf(s) + 0.42;
-        return;
-      }
+    // 第一行：前 cols 个各占一列，保证首屏每一列顶部是完整可见的样本；
+    // 其余按高度降序做 LPT（最长优先），把列尾高差压到最小
+    var head = state.list.slice(0, cols);
+    var rest = state.list.slice(cols).sort(function (a, b) { return ratioOf(b) - ratioOf(a); });
+    head.forEach(function (s, i) {
+      holders[i].el.appendChild(makeCard(s, i));
+      holders[i].h += ratioOf(s) + 0.42;
+    });
+    rest.forEach(function (s, k) {
       holders.sort(function (a, b) { return a.h - b.h; });
-      holders[0].el.appendChild(card);
+      holders[0].el.appendChild(makeCard(s, cols + k));
       holders[0].h += ratioOf(s) + 0.42;
     });
   }
@@ -390,7 +407,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     state.filter = f;
     state.list = f === "all" ? state.all.slice() : state.all.filter(function (s) { return s.kind === f; });
     document.querySelectorAll(".tabs button").forEach(function (b) {
-      b.setAttribute("aria-selected", String(b.dataset.filter === f));
+      b.setAttribute("aria-pressed", String(b.dataset.filter === f));
     });
     render();
   }
@@ -418,6 +435,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     box.classList.toggle("at-end", !more || pre.scrollTop + pre.clientHeight >= pre.scrollHeight - 6);
   }
 
+  function setBackgroundInert(on) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === VIEWER || el.tagName === "SCRIPT") return;
+      if (on) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    });
+  }
+
   function open(i) {
     state.idx = i;
     var s = state.list[i];
@@ -430,7 +455,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       var v = document.createElement("video");
       v.src = s.media.video;
       v.poster = s.media.poster;
-      v.controls = true; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.controls = true; v.controlsList = "nodownload noplaybackrate"; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
       v.preload = "metadata";
       v.setAttribute("aria-label", s.title + " 生成视频");
       stage.appendChild(v);
@@ -470,12 +495,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     resetCopy();
     checkPromptOverflow();
 
+    setBackgroundInert(true);
     VIEWER.setAttribute("open", "");
     document.body.style.overflow = "hidden";
     $("v-back").focus();
   }
 
   function close() {
+    setBackgroundInert(false);
     VIEWER.removeAttribute("open");
     document.body.style.overflow = "";
     var v = VIEWER.querySelector("video");
@@ -502,7 +529,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     var text = s.prompt;
     var done = function () {
       var b = $("v-copy");
-      b.textContent = "已复制 · " + fmt(text.length) + " 字";
+      b.textContent = "已复制 · " + fmt(text.length) + " 字符";
       b.classList.add("done");
       $("seal").classList.add("on");
       clearTimeout(copyPrompt._t);
@@ -550,7 +577,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   // ── 载入 ──
   fetch("data/samples.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function (data) {
+    .then(function (payload) {
+      var data = Array.isArray(payload) ? payload : (payload.samples || []);
+      var updated = (!Array.isArray(payload) && payload.updated) || "";
       var order = ["a-1","v-v00164","a-2","v-v00165",
                    "w-snowforest","v-v00167","w-watertown","a-3",
                    "w-lotus","w-glacier","w-moonpath","w-sunflower",
@@ -568,10 +597,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       $("c-image").textContent = nImg;
       $("c-video").textContent = nVid;
       $("h1-count").textContent = sorted.length;
-      $("updated").textContent = "更新于 2026-11-17";
+      $("updated").textContent = updated ? "更新于 " + updated : "";
       var models = [];
       sorted.forEach(function (s) { if (models.indexOf(s.model_short) < 0) models.push(s.model_short); });
       $("models").textContent = models.join(" / ");
+      var full = [];
+      sorted.forEach(function (s) { if (full.indexOf(s.model) < 0) full.push(s.model); });
+      var lg = $("legend");
+      lg.textContent = "";
+      full.forEach(function (m) { var sp = document.createElement("span"); sp.textContent = m; lg.appendChild(sp); });
+      var tail = document.createElement("span"); tail.textContent = "参数在详情右栏"; lg.appendChild(tail);
       document.title = "提示词样本册 · " + sorted.length + " 条 · x7peeps";
       applyFilter("all");
     })

@@ -14,11 +14,14 @@ VIEWS = [("desk", 1440, 900), ("wide", 1920, 1080), ("tab", 820, 1100), ("phone"
 
 report = {"url": URL, "views": {}, "problems": []}
 
+LOCAL = ("127.0.0.1" in URL) or ("localhost" in URL)
+CHROME_ARGS = ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"]
+if LOCAL:
+    # 本地页面必须绕开系统代理，否则被塞进境外节点，截到的是代理错误页
+    CHROME_ARGS += ["--proxy-server=direct://", "--proxy-bypass-list=*"]
+
 with sync_playwright() as p:
-    b = p.chromium.launch(channel="chrome", headless=True,
-                          args=["--use-fake-device-for-media-stream",
-                                "--use-fake-ui-for-media-stream",
-                                "--proxy-bypass-list=*"])
+    b = p.chromium.launch(channel="chrome", headless=True, args=CHROME_ARGS)
     for name, w, h in VIEWS:
         ctx = b.new_context(viewport={"width": w, "height": h}, device_scale_factor=2,
                             color_scheme="light")
