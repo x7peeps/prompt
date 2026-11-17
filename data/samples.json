@@ -1,0 +1,524 @@
+[
+ {
+  "id": "w-birch",
+  "kind": "image",
+  "title": "秋桦与冰川缆车",
+  "subtitle": "金黄桦林前，一道钢索穿过冰川",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": 555297,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical landscape photograph, ultra-detailed 8K wallpaper quality, of a narrow winding footpath through a dense autumn birch forest in the northern highlands. Lower third: tactile forest floor of damp fallen leaves in amber and rust, scattered curls of white birch bark, a few moss-covered stones and thin exposed roots crossing the trail, crisp leaf veins and curled dry leaf edges readable at full resolution. Middle third: two rows of slender white birch trunks with black horizontal lenticel marks receding along the path, the path itself a soft visual lead line drawing the eye upward, thin ground mist drifting between the trunks at knee height, deep spatial layering across near, mid and far trunk rows. Upper third: the canopy closes overhead, the very top of the frame is deep charcoal shadow with almost no sky visible, only a narrow gap of dusk sky low on the horizon, no bright open sky, no white sky at the top, near-black at the very top edge. Lighting: late golden hour with the sun already below the ridge line, warm amber light raking in from the right at a low angle, no sun disk and no lens flare in frame, long soft shadows lying across the path, warm highlights against cool blue-violet shadows. Palette limited to amber-rust, birch white and cool blue-violet shadow. Mood: serene, solitary, quiet melancholy of late autumn. Shot on medium format, natural depth of field, fine film grain, believable bark texture and leaf litter, no people, no buildings, no text, no watermark, no HDR halo, no oversaturation, no plastic look.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "提示词把画面切成下 / 中 / 上三段分别描述：近处是落叶与岩面纹理，中景是桦林与缆索，远景才是冰川。三段各自给了材质和光位，模型因此不会把远处当主体放大。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/birch-f.jpg",
+   "thumb": "assets/img/birch-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch13 · autumnbirchglaciercable_H3"
+ },
+ {
+  "id": "w-glacier",
+  "kind": "image",
+  "title": "冰川裂隙蓝",
+  "subtitle": "冰壁的蓝不是滤镜，是深度差",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": 673621,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Vertical nightscape photograph, ultra-detailed 8K wallpaper quality, of the Milky Way arcing over a mirror-calm glacier lake in the high alpine. Lower third: dark polished lake water with an almost perfect inverted reflection of the galactic core, fine concentric ripples only near the near shore where the water meets wet black gravel, tiny ice-cold stones and thin frost crystals catching starlight, deep continuous focus, sharp, no bokeh balls, no glitter noise. Middle third: a band of low drifting mist hovering just above the water surface, the far shore a black silhouette of glacier-carved granite ridges, one small stranded iceberg with pale cyan internal glow grounded near the right bank. Upper third: the galactic core rises vertically through the upper sky, dense star fields with individually resolved stars and natural density variation, faint green airglow low near the horizon, the very top of the frame fading into near-black deep charcoal sky, no moon, no bright open sky, no white sky. Palette limited to deep blue-black, glacial cyan and one faint warm amber accent at the horizon. Absolute stillness, cold, vast and silent mood. Long exposure look, clean shadow detail in the rocks and ice, no star-trail smearing, no artificial noise, no light pollution, no people, no boats, no text, no watermark, no fake composite look.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "关键写法是给冰的每层深度指定色温：表层偏白、裂隙内偏青、冰下透出深蓝。颜色随深度变化，冰的体积感才出得来。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/glacier-f.jpg",
+   "thumb": "assets/img/glacier-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch13 · autumnbirchglaciercable_H3"
+ },
+ {
+  "id": "w-cable",
+  "kind": "image",
+  "title": "雪线之上的索道",
+  "subtitle": "钢索、塔架、雾凇，一条线切开山谷",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": 500582,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Vertical high-angle tilt-shift photograph, ultra-detailed 8K wallpaper quality, of a tiny mountain cable-car village on an autumn night, seen from a hillside high above the rooftops. One narrow continuous focus plane crosses the main street and the cable-car station across the middle of the frame, everything above and below dissolving into gradual optical blur produced by real tilt-shift optics. Lower third: the town's wet cobbled main street with warm lamplight pooling on the stones, a few tiny parked cars, lit shop windows, miniature consistent-scale detail, fallen autumn leaves gathered in the gutters. Middle third: the cable-car station with its steel truss and one suspended cabin glowing warm from within, a thin cable rising diagonally toward the left edge, chalet roofs of dark timber with a dusting of early frost, small chimneys with thin smoke. Upper third: the mountain slope and a deep charcoal night sky, near-black at the very top edge, a thin band of warm village light haze hanging low over the roofline, no bright open sky, no white sky. Lighting: blue-hour night, warm practical tungsten lights as the only warm source, cool deep blue ambient filling the shadows. Palette limited to warm tungsten amber against deep blue night. Playful miniature diorama feel from real optics, believable scale and materials, no isometric view, no warped buildings, no oversized text, no people, no watermark, no toy plastic look.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "画面里只有一条人造直线（缆索），其余全是自然曲线。提示词反复强调「the cable stays a single straight line」，避免模型把索道画成扭曲的绳索。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/cable-f.jpg",
+   "thumb": "assets/img/cable-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch13 · autumnbirchglaciercable_H3"
+ },
+ {
+  "id": "w-cliff",
+  "kind": "image",
+  "title": "海边月升断崖",
+  "subtitle": "低机位，浪在脚下碎成白沫",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 seascape photograph, ultra-detailed, 8K wallpaper quality: a weathered wooden boardwalk running along the crest of a dark coastal cliff at dusk, black sea stacks and a churning tide far below. Lower third: wet planks of the boardwalk at close range, grain and salt bloom worked into the wood, rusted iron nail heads, clumps of dry sea thrift and wind-bent grass pushing up between the planks, the cliff edge broken into dark rock and loose scree. Middle third: the boardwalk curving away as a strong lead line toward a headland, a low rail of weathered posts and wire, the sea beneath in cold slate blue with long white breakers folding around tall black sea stacks, salt spray haze softening the far waterline. Upper third: heavy dusk cloud closing the top of the frame, deep charcoal and slate grey with one narrow band of dull amber light left at the horizon behind the headland, no sun disk, near-black at the very top edge, no bright open sky. Lighting: well after sunset, low ambient blue light with a single weak warm rim on the cloud bars and the rail tops, everything else falling into shadow. Palette limited to slate blue, wet charcoal and dull amber. Mood: bracing, solitary, wind and surf implied rather than shown. Shot on medium format with a polariser, natural depth of field, fine film grain, believable wet wood and salt-crusted rock, no people, no boats, no buildings, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "低机位是靠「camera at knee height, horizon in the upper third」两句一起锁的；只写 low angle，模型经常把地平线放中间。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/cliff-f.jpg",
+   "thumb": "assets/img/cliff-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch14 · seamoonlotuscliff_H3"
+ },
+ {
+  "id": "w-lotus",
+  "kind": "image",
+  "title": "荷塘月色",
+  "subtitle": "花瓣边缘的一圈冷光",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 photograph, ultra-detailed, 8K wallpaper quality: one lotus pond at late dusk, a single open blossom standing above the leaf canopy as the only subject. Lower third: broad lotus leaves at close range, water beaded and pooling in the leaf centres, the waxy surface catching a thin sheen, a few brown seed pods and one curled leaf edge giving the foreground real weight. Middle third: the pond surface as dark still water with soft reflections of the blossom and the reed bank, stems crossing the frame vertically as visual paths, a low band of vapour drifting over the water. Upper third: a dark reed and willow bank in backlit silhouette closing the horizon, above it a deep charcoal sky with the last warm grey light in a narrow strip, deliberately underexposed so nothing competes with a lock-screen clock. One weak warm source from behind the reed bank, rim light on the blossom petals only, palette limited to dusty pink, deep bottle green and charcoal, humid still air, meditative and slightly melancholy mood, no dragonflies in motion, no lens flare, no water sparkle noise. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "荷花的难点是花瓣半透。提示词用「backlit petal edges glowing」而不是「translucent」，因为后者会让模型把整朵处理成玻璃质感。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/lotus-f.jpg",
+   "thumb": "assets/img/lotus-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch14 · seamoonlotuscliff_H3"
+ },
+ {
+  "id": "w-moonpath",
+  "kind": "image",
+  "title": "月光铺在海面",
+  "subtitle": "一条光路，从地平线走到沙滩",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 seascape photograph, ultra-detailed, 8K wallpaper quality: one full moon sitting low over a flat calm open sea, laying a broken silver path of light straight down the centre of the water toward the viewer. Lower third: wet black basalt rocks and a shallow tidal shelf at close range, sheen of water on stone, salt crust in the cracks, thin foam sliding back between the rocks as the only movement. Middle third: glassy water carrying the moon path as a column of short horizontal ripples that widen toward the horizon, a single dark rock stack far off for scale, sea haze softening the waterline. Upper third: deep charcoal sky with two thin horizontal cloud bars catching moonlight at their lower edges, the rest of the frame empty and low-contrast so a clock stays legible. One cool directional moonlight source, palette limited to blue-grey, silver and wet black, fine salt mist in the air, lonely and unhurried mood, believable water surface, no boats, no lens flare clutter. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "水面反光的写法：不说「反光」，说「a broken column of moonlight reaching the shore」，给的是形状而不是效果，模型才会画出断续的波光而不是一片白。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/moonpath-f.jpg",
+   "thumb": "assets/img/moonpath-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch14 · seamoonlotuscliff_H3"
+ },
+ {
+  "id": "w-paddy",
+  "kind": "image",
+  "title": "盐田与稻浪",
+  "subtitle": "格子里装着天的颜色",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Vertical high-angle tilt-shift photograph, 9:16, ultra-detailed, 8K wallpaper quality: one hillside of terraced rice paddies at dusk with a hamlet of tiled roofs folded into the slope. Lower third: the nearest terrace wall at close range, wet stone courses, standing water in the paddy above it holding a pale dusk reflection, grass tufts on the bund edge, all inside the focus plane. Middle third: one narrow continuous focus plane crossing the terrace steps and the single lane that threads between the paddies, tiny figures-free houses at consistent miniature scale, warm lamp light in three windows, a thread of mist collecting in the valley fold. Upper third: the terraces climbing into a dark wooded ridge, above it a deep charcoal sky with a narrow band of dull amber, dissolving gradually into optical blur at the top edge so the frame stays low-key. Dusk practical lights only, palette limited to warm lamp amber, deep paddy green and charcoal, playful miniature feel from real optics, no isometric view, no warped buildings, no oversized text, no fake vignette. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "盐田的水面是天空的镜子，提示词把「格子」当构图主体：先写田埂的网格线，再写每格里反射的云。秩序感来自几何，不来自颜色。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/paddy-f.jpg",
+   "thumb": "assets/img/paddy-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch15 · tulipsaltpaddy_H3"
+ },
+ {
+  "id": "w-saltgalaxy",
+  "kind": "image",
+  "title": "盐湖星空",
+  "subtitle": "脚下是银河，头顶也是",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 nightscape photograph, ultra-detailed, 8K wallpaper quality: the galactic core standing over a flooded salt flat that mirrors it almost perfectly. Lower third: a thin film of water over cracked salt polygons at close range, the crust edges just breaking the surface, the sky reflected in the film between them so the foreground reads as wet glass with real texture, not a smooth sheet. Middle third: the flat running to a low horizon, a single small dark volcanic cone silhouetted on the left for scale, the bright band of the galaxy doubled by the water, faint airglow along the horizon. Upper third: deep charcoal-blue sky, the dust lanes of the Milky Way arcing through it, individually resolved stars with natural density variation, the very top of frame left thin and dark for a clock. No moon in frame, single ambient starlight, palette limited to blue-black, cold silver and one faint warm accent at the horizon, absolute stillness, believable salt crust, no star-trail smearing, no artificial noise, no light pollution glow. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "同一片盐湖同时有倒影和星空，提示词必须指定「foreground reflection sharper than the sky」，否则模型会把倒影也糊成星点。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/saltgalaxy-f.jpg",
+   "thumb": "assets/img/saltgalaxy-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch15 · tulipsaltpaddy_H3"
+ },
+ {
+  "id": "w-tulip",
+  "kind": "image",
+  "title": "郁金香花田",
+  "subtitle": "低到花茎高度的一条红带",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 landscape photograph, ultra-detailed, 8K wallpaper quality: one field of tulips in ordered rows at first light, seen low and close so the rows converge toward a dark tree wall. Lower third: individual tulip heads at arm's length, dew beads sitting in the cup of each petal, wet black soil visible between rows, two or three out-of-focus stems crossing the very bottom corner as a natural frame. Middle third: the converging rows as the visual path, a knee-high band of ground mist lying across them, the flower colour fading as the rows recede, a single weathered wooden stake for scale. Upper third: the far side of the field closed off by a dense backlit alder and poplar wall in near-silhouette, and above it a deep charcoal sky with an overcast dusk lid, everything behind the flowers held dark so the top of the frame stays low-key and the clock reads clean. Soft backlight from just above the treeline, no sun disc in frame, petals translucent at the edges, palette limited to saturated crimson, deep green and charcoal, damp cool morning air, quiet and private mood, no tractors, no lens flare. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "花田最容易糊成一片色块。提示词用「individual stems visible in the near rows」逼出个体，再让远处的行距收窄成色带。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/tulip-f.jpg",
+   "thumb": "assets/img/tulip-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch15 · tulipsaltpaddy_H3"
+ },
+ {
+  "id": "w-watertown",
+  "kind": "image",
+  "title": "雨后江南水乡",
+  "subtitle": "青石板、灯影、一条窄河",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 photograph, ultra-detailed, 8K wallpaper quality: a Jiangnan water town at blue hour just after rain. Lower third: a wet flagstone lane running beside a narrow canal, standing water in the stone joints catching warm lantern reflections, a low mossy stone step down to the water, the canal surface dark and glassy with soft ripple texture. Middle third: whitewashed walls and dark tiled eaves of old riverside houses on both sides, a single arched stone bridge with worn treads crossing the canal, a row of small red silk lanterns lit under the eaves throwing a dim amber glow onto the wet stone, thin mist drifting above the water. Upper third: deep Prussian-blue dusk sky fading to near-black at the very top, thin rain clouds, the very top of the frame left clean and dark for a clock. Palette limited to blue-black, ink grey and one warm amber accent, low-key exposure, believable plaster and stone texture, soft haze, no lens flare, no artificial noise. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "中式的场景要用中式的物件词：马头墙、河埠头、乌篷船、灯笼。写 whitewashed walls 太泛，模型会照欧洲小镇画。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/watertown-f.jpg",
+   "thumb": "assets/img/watertown-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch17 · watertownsunflowersnowforest_H3"
+ },
+ {
+  "id": "w-sunflower",
+  "kind": "image",
+  "title": "黄昏向日葵",
+  "subtitle": "最后一束光打在低垂的花盘上",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 landscape photograph, ultra-detailed, 8K wallpaper quality: a sunflower field at the last light of dusk, seen low and close. Lower third: a few sunflower heads at close range, petals slightly drooping after the day's heat, backlit rims glowing warm amber against the dark, thick green stalks and broad leaves in near shadow, a worn dirt furrow running between rows. Middle third: ordered rows of sunflowers receding toward a low dark tree line and a distant low hill, thin ground mist settling between the stems, the last band of afterglow lying very low on the horizon behind the trees. Upper third: deep charcoal-blue dusk sky with the afterglow fading out quickly upward, near-black at the very top, a few thin dark clouds, the very top of the frame left clean and dark for a clock. Palette limited to near-black, muted olive green and warm amber rim light, low-key exposure, believable petal and leaf texture, natural grain, no lens flare, no artificial noise. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "「petals slightly drooping after the day's heat」这一句是灵魂：它同时给了时间（傍晚）、状态（晒了一天）和材质（花瓣失水），比写 warm light 有效得多。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/sunflower-f.jpg",
+   "thumb": "assets/img/sunflower-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch17 · watertownsunflowersnowforest_H3"
+ },
+ {
+  "id": "w-snowforest",
+  "kind": "image",
+  "title": "雪后针叶林",
+  "subtitle": "低角度的冬日阳光斜切树干",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "3072×5472",
+  "aspect": "9:16",
+  "seed": null,
+  "seconds": null,
+  "frames": null,
+  "prompt": "Cinematic vertical 9:16 landscape photograph, ultra-detailed, 8K wallpaper quality: a snow-laden conifer forest just after a snowfall, low winter sun raking through the trunks. Lower third: fresh undisturbed snow with fine wind ripples and a few faint animal tracks leading away, snow piled thick on low branches, a fallen frosted log half buried, close-range snow texture crisp and believable. Middle third: tall dark spruce and fir trunks in rows, each carrying a heavy load of snow on upturned branches, thin cold mist drifting between the trees, a single shaft of low golden light cutting across the corridor and catching the airborne snow dust, long blue shadows lying across the ground. Upper third: dense dark canopy closing overhead, deep charcoal-blue sky visible in narrow gaps, near-black at the very top, fine snow still hanging in the air, the very top of the frame left clean and dark for a clock. Palette limited to blue-shadow snow, near-black conifer green and one warm gold accent, low-key exposure, believable bark and snow crust texture, natural grain, no lens flare, no artificial noise. no people, no text, no watermark, no logo, no border, no split composition, calm low-key sky in the upper third, no bright open sky, no overexposed white sky.",
+  "prompt_lang": "en",
+  "lang_label": "英文提示词",
+  "note": "雪景的层次靠「前中后三段各自的雪」：前景是带风纹的新雪，中景是压弯的枝条，远景是被雾吞掉的树影。只写 snowy forest 会得到一片白。",
+  "tags": [
+   "风景",
+   "壁纸",
+   "分层构图"
+  ],
+  "media": {
+   "full": "assets/img/snowforest-f.jpg",
+   "thumb": "assets/img/snowforest-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "壁纸产线 batch17 · watertownsunflowersnowforest_H3"
+ },
+ {
+  "id": "a-1",
+  "kind": "image",
+  "title": "短剧女主 · 全身三视图",
+  "subtitle": "同一条提示词补一句全身约束，脚就有了",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "1664×1216",
+  "aspect": "4:3",
+  "seed": 184372,
+  "seconds": null,
+  "frames": null,
+  "prompt": "28到35岁东亚女性，短发齐肩黑发偏右分，肤色偏白，深红色羊毛大衣扣到领口，左肩一只黑色皮质手提包，唇色很淡。每一格都是从头顶到脚底的完整全身，双脚与鞋全部可见，人物占满该格高度。画面被两条竖线均分为恰好三格，从左到右依次排列：第一格正面全身、第二格侧面全身、第三格背面全身；三格同一人物、同一服装、同一光位、同一比例。中性灰背景，均匀柔光。写实电影质感，皮肤保留毛孔与细纹，不磨皮。画面里正好三格，不要两格，不要四格，不要文字，不要水印，不要多余人物，不要夸张表情。",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "初版只写了「三格同一人物、同一服装」，出来的三格到大腿就截断了，鞋完全看不见。补上「每一格都是从头顶到脚底的完整全身，双脚与鞋全部可见」这一句之后，同一 seed 重跑才得到这条完整全身三视图。人物资产能不能用，往往就差这一句。",
+  "tags": [
+   "人物",
+   "三视图",
+   "提示词迭代"
+  ],
+  "media": {
+   "full": "assets/img/asset1-f.jpg",
+   "thumb": "assets/img/asset1-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "短剧实验室 h3-drama-lab · 图槽资产（v2 全身版）"
+ },
+ {
+  "id": "a-2",
+  "kind": "image",
+  "title": "短剧男主 · 全身三视图",
+  "subtitle": "同模板换角色，只改人物描述段",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "1664×1216",
+  "aspect": "4:3",
+  "seed": 907731,
+  "seconds": null,
+  "frames": null,
+  "prompt": "35到40岁东亚男性，短黑发两鬓灰白，下颌一层短须，石板灰棉质衬衫袖子挽到肘部，身形清瘦。每一格都是从头顶到脚底的完整全身，双脚与鞋全部可见，人物占满该格高度。画面被两条竖线均分为恰好三格，从左到右依次排列：第一格正面全身、第二格侧面全身、第三格背面全身；三格同一人物、同一服装、同一光位、同一比例。中性灰背景，均匀柔光。写实电影质感，皮肤保留毛孔与细纹，不磨皮。画面里正好三格，不要两格，不要四格，不要文字，不要水印，不要多余人物，不要夸张表情。",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "三视图模板稳住之后，换角色只改人物描述那一段：年龄、发型、服装、身形。模板里「三格同一人物、同一光位、同一比例、不要两格不要四格」全部保留，人物资产才能批量产。",
+  "tags": [
+   "人物",
+   "三视图",
+   "资产"
+  ],
+  "media": {
+   "full": "assets/img/asset2-f.jpg",
+   "thumb": "assets/img/asset2-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "短剧实验室 h3-drama-lab · 图槽资产（v2 全身版）"
+ },
+ {
+  "id": "a-3",
+  "kind": "image",
+  "title": "短剧场景 · 出租屋主视角",
+  "subtitle": "五件家具，位置逐件写死",
+  "model": "MiniMax H3-Image",
+  "model_short": "H3-Image",
+  "size": "1088×1856",
+  "aspect": "9:16",
+  "seed": 331207,
+  "seconds": null,
+  "frames": null,
+  "prompt": "中国小城出租屋的一间小屋，正中一张小方桌（原木桌面），桌右侧一把木椅，后墙一扇关闭的木门，左墙一扇窗（窗外是夜色），桌上方一盏低垂的白炽灯，地面是磨损的水泥地。正对空间的一个平视主视角，能同时看到方桌、木椅、门、窗与吊灯，五件都不出画。吊灯为主光，暖黄色，其余落在冷蓝阴影里，空气中有一层细尘。写实，年代不明确，木料有使用痕迹。不要文字、不要人物、不要多格拼图、不要俯视图、不要多个视角。",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "场景提示词把五件家具的位置逐件写死（小方桌、木椅、后墙门、左墙窗、低垂灯泡），因为后续每个镜头都要回到这个空间。空间一旦不确定，分镜之间就会穿帮。",
+  "tags": [
+   "场景",
+   "空间",
+   "资产"
+  ],
+  "media": {
+   "full": "assets/img/asset3-f.jpg",
+   "thumb": "assets/img/asset3-t.jpg",
+   "video": null,
+   "poster": null
+  },
+  "source": "短剧实验室 h3-drama-lab · 图槽资产（v2 全身版）"
+ },
+ {
+  "id": "v-v00164",
+  "kind": "video",
+  "title": "守约 · 扣扳机",
+  "subtitle": "枪口焰、弹头尾迹、镜头快速拉开",
+  "model": "MiniMax H3 Ref2VA",
+  "model_short": "H3-Ref2VA",
+  "size": "1344×768",
+  "aspect": "16:9",
+  "seed": null,
+  "seconds": 2.3,
+  "frames": 52,
+  "prompt": "严格保持首帧中的人物身份、性别、服饰、兵器、场景、构图与镜头机位，色调不变，只演出下面这一段动作，动作要有明确的起、过程与止，人物数量不变，不新增人物、不变形、不出文字水印、不切换场景、不改变机位。\n起始状态：守约贴地趴姿，枪口正对画面前方，扳机指刚扣下。\n动作：守约扣下扳机，弹头出膛飞出。\n结束状态：枪口焰喷出，一颗弹头拖着白色尾迹飞出画面。\n镜头：close on the rifle, fast rack out",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "把「快」写成三段时间：扳机指刚扣下（起）→ 弹头出膛（过程）→ 枪口焰与尾迹飞出画面（止）。再补一句镜头运动（fast rack out），模型才知道快的方向是往外拉，不是抖动。这条与下面两条是同一场雪地戏的连续镜头。",
+  "tags": [
+   "视频",
+   "动作",
+   "运镜"
+  ],
+  "media": {
+   "full": null,
+   "thumb": "assets/poster/v00164.jpg",
+   "video": "assets/video/v00164.mp4",
+   "poster": "assets/poster/v00164.jpg"
+  },
+  "source": "4090 ComfyUI · H3 Ref2VA · 52 帧"
+ },
+ {
+  "id": "v-v00165",
+  "kind": "video",
+  "title": "李白 · 被魂链抽飞",
+  "subtitle": "受力点、身体翻转、酒葫芦弹起",
+  "model": "MiniMax H3 Ref2VA",
+  "model_short": "H3-Ref2VA",
+  "size": "1344×768",
+  "aspect": "16:9",
+  "seed": null,
+  "seconds": 2.3,
+  "frames": 52,
+  "prompt": "严格保持首帧中的人物身份、性别、服饰、兵器、场景、构图与镜头机位，色调不变，只演出下面这一段动作，动作要有明确的起、过程与止，人物数量不变，不新增人物、不变形、不出文字水印、不切换场景、不改变机位。\n起始状态：李白坐在垛口砖沿上，酒葫芦搁在膝边，一条魂链横着扫过来。\n动作：魂链横扫，把坐在垛口的李白抽飞出去。\n结束状态：李白被抽离砖沿、整个人在空中翻过去，酒葫芦从砖上弹起。\n镜头：whip pan from the chain to the battlement",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "被击飞的写法要点在「受力链」：链子扫到哪、人被带向哪、随身物件怎么反应。只写「被击飞」模型会让人物凭空平移；写上酒葫芦从砖沿弹起，才有重量。",
+  "tags": [
+   "视频",
+   "动作",
+   "运镜"
+  ],
+  "media": {
+   "full": null,
+   "thumb": "assets/poster/v00165.jpg",
+   "video": "assets/video/v00165.mp4",
+   "poster": "assets/poster/v00165.jpg"
+  },
+  "source": "4090 ComfyUI · H3 Ref2VA · 52 帧"
+ },
+ {
+  "id": "v-v00167",
+  "kind": "video",
+  "title": "李白 · 砸进雪里",
+  "subtitle": "落地、雪雾、静止",
+  "model": "MiniMax H3 Ref2VA",
+  "model_short": "H3-Ref2VA",
+  "size": "1344×768",
+  "aspect": "16:9",
+  "seed": null,
+  "seconds": 2.3,
+  "frames": 52,
+  "prompt": "严格保持首帧中的人物身份、性别、服饰、兵器、场景、构图与镜头机位，色调不变，只演出下面这一段动作，动作要有明确的起、过程与止，人物数量不变，不新增人物、不变形、不出文字水印、不切换场景、不改变机位。\n起始状态：李白背着地砸进雪里，扬起一大片雪雾，酒葫芦还在滚。\n动作：李白砸进雪里，酒葫芦滚出很远才停。\n结束状态：雪雾散开，李白摊在雪坑里不动，酒葫芦停在几丈外的雪坡下。\n镜头：static wide, low",
+  "prompt_lang": "zh",
+  "lang_label": "中文提示词",
+  "note": "落地镜头靠「余波」：人落地之后雪雾还要继续动一两秒，最后才停。提示词把结束状态写成「雪雾散开，人摊在雪坑里不动」，模型才给得出收尾，而不是在落地瞬间切掉。",
+  "tags": [
+   "视频",
+   "动作",
+   "运镜"
+  ],
+  "media": {
+   "full": null,
+   "thumb": "assets/poster/v00167.jpg",
+   "video": "assets/video/v00167.mp4",
+   "poster": "assets/poster/v00167.jpg"
+  },
+  "source": "4090 ComfyUI · H3 Ref2VA · 52 帧"
+ }
+]
