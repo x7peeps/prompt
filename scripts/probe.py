@@ -26,8 +26,8 @@ bad = report["problems"].append
 def static_checks():
     """不依赖浏览器的交付约束：数据契约、HTML 关键点、分享图。"""
     data = json.load(open(f"{ROOT}/data/samples.json", encoding="utf-8"))
-    if set(data) != {"updated", "models", "samples"}:
-        bad(f"data: 顶层字段异常 {list(data)}")
+    if not {"updated", "models", "samples"} <= set(data):
+        bad(f"data: 顶层缺字段 {list(data)}")
     samples = data["samples"]
     report["data"] = {"n": len(samples), "models": data["models"],
                       "kinds": {k: sum(1 for s in samples if s["kind"] == k) for k in ("image", "video")}}
@@ -93,6 +93,19 @@ with sync_playwright() as p:
             h1: (document.querySelector('h1') || {}).textContent.trim(),
             h1Count: document.querySelectorAll('h1').length,
             tabsPressed: document.querySelectorAll('.tabs button[aria-pressed]').length,
+            groups: [...document.querySelectorAll('.group')].map(g => {
+              const cs = [...g.querySelectorAll('.s')];
+              const ws = cs.map(c => Math.round(c.getBoundingClientRect().width));
+              const hs = cs.map(c => Math.round(c.getBoundingClientRect().height));
+              const rs = cs.map(c => {
+                const r = c.querySelector('.s-media').getBoundingClientRect();
+                return +(r.height / r.width).toFixed(3);
+              });
+              return { title: g.querySelector('h2').textContent, cards: cs.length,
+                       wEq: new Set(ws).size === 1, wMin: Math.min(...ws), wMax: Math.max(...ws),
+                       hEq: new Set(hs).size === 1, hMin: Math.min(...hs), hMax: Math.max(...hs),
+                       ratioEq: new Set(rs).size === 1 };
+            }),
             legend: document.getElementById('legend').textContent,
             goPos: go ? getComputedStyle(go).position : null,
             goInMedia: go ? go.parentElement.className : null,
@@ -117,12 +130,15 @@ with sync_playwright() as p:
             bad(f"{name}: 存在非 <a> 卡片")
         if not m["h1"] or str(report["data"]["n"]) not in m["h1"]:
             bad(f"{name}: H1 条数与数据不一致 -> {m['h1']}")
-        if m["tabsPressed"] != 3:
-            bad(f"{name}: 筛选按钮 aria-pressed 数 {m['tabsPressed']} ≠ 3")
+        if m["tabsPressed"] != 4:
+            bad(f"{name}: 筛选按钮 aria-pressed 数 {m['tabsPressed']} ≠ 4")
         if not all(x in m["legend"] for x in report["data"]["models"]):
             bad(f"{name}: 图例未覆盖全部模型 -> {m['legend']}")
         if m["goPos"] != "absolute" or "s-media" not in (m["goInMedia"] or ""):
             bad(f"{name}: 「打开」浮标未浮在图上 -> {m['goPos']} / {m['goInMedia']}")
+        for g in m["groups"]:
+            if not (g["wEq"] and g["hEq"] and g["ratioEq"]):
+                bad(f"{name}: 段「{g['title']}」不齐 宽{g['wMin']}~{g['wMax']} 高{g['hMin']}~{g['hMax']} 比例一致={g['ratioEq']}")
         if len(set(m["cardFontSizes"])) > 5:
             bad(f"{name}: 卡片字号 {len(set(m['cardFontSizes']))} 档 > 5  {m['cardFontSizes']}")
         report["views"][name] = m

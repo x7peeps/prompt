@@ -95,7 +95,7 @@ for slug, (batch_no, title, sub, note) in WALL_META.items():
         model="MiniMax H3-Image", model_short="H3-Image",
         size=f"{w}×{h}", aspect="9:16", seed=seed, seconds=None, frames=None,
         prompt=prompt, prompt_lang="en", lang_label="英文提示词",
-        note=note, tags=["风景", "壁纸", "分层构图"],
+        note=note, tags=["风景", "壁纸", "分层构图"], group="plate",
         media=dict(full=f"assets/img/{full.name}", thumb=f"assets/img/{thumb.name}", video=None, poster=None),
         source=f"壁纸产线 batch{batch_no} · {bdir.name.split('_', 1)[1]}",
     ))
@@ -132,6 +132,7 @@ for item in pj:
         seconds=None, frames=None,
         prompt=item["prompt"], prompt_lang="zh", lang_label="中文提示词",
         note=meta["note"], tags=meta["tags"],
+        group=("plate" if item["slot"] == "3" else "character"),
         media=dict(full=f"assets/img/{full.name}", thumb=f"assets/img/{thumb.name}", video=None, poster=None),
         source="短剧实验室 h3-drama-lab · 图槽资产（v2 全身版）",
     ))
@@ -200,7 +201,7 @@ for fname, title, sub, note in VIDEO_PICK:
         model="MiniMax H3-Ref2VA", model_short="H3-Ref2VA",
         size="1344×768", aspect="16:9", seed=None, seconds=2.3, frames=52,
         prompt=r.get("txt", "").strip(), prompt_lang="zh", lang_label="中文提示词",
-        note=note, tags=["视频", "动作", "运镜"],
+        note=note, tags=["视频", "动作", "运镜"], group="video",
         media=dict(full=None, thumb=f"assets/poster/{poster.name}", video=f"assets/video/{dst.name}",
                    poster=f"assets/poster/{poster.name}"),
         source="4090 ComfyUI · H3 Ref2VA · 52 帧",
@@ -211,6 +212,11 @@ out.parent.mkdir(exist_ok=True)
 payload = {
     "updated": "2026-11-17",
     "models": sorted({s["model"] for s in samples}),
+    "groups": [
+        {"id": "character", "label": "人物资产", "note": "三视图：同一人、同一光位、三格完整全身"},
+        {"id": "video", "label": "动作镜头", "note": "图生视频：起始状态 → 动作 → 结束状态"},
+        {"id": "plate", "label": "壁纸与场景", "note": "竖版 9:16：12 张 8K 风景 + 1 个短剧场景"},
+    ],
     "samples": samples,
 }
 json.dump(payload, out.open("w", encoding="utf-8"), ensure_ascii=False, indent=1)

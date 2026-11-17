@@ -4,6 +4,23 @@
   "MiniMax H3-Image",
   "MiniMax H3-Ref2VA"
  ],
+ "groups": [
+  {
+   "id": "character",
+   "label": "人物资产",
+   "note": "三视图：同一人、同一光位、三格完整全身"
+  },
+  {
+   "id": "video",
+   "label": "动作镜头",
+   "note": "图生视频：起始状态 → 动作 → 结束状态"
+  },
+  {
+   "id": "plate",
+   "label": "壁纸与场景",
+   "note": "竖版 9:16：12 张 8K 风景 + 1 个短剧场景"
+  }
+ ],
  "samples": [
   {
    "id": "w-birch",
@@ -26,6 +43,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/birch-f.jpg",
     "thumb": "assets/img/birch-t.jpg",
@@ -55,6 +73,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/glacier-f.jpg",
     "thumb": "assets/img/glacier-t.jpg",
@@ -84,6 +103,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/cable-f.jpg",
     "thumb": "assets/img/cable-t.jpg",
@@ -113,6 +133,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/cliff-f.jpg",
     "thumb": "assets/img/cliff-t.jpg",
@@ -142,6 +163,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/lotus-f.jpg",
     "thumb": "assets/img/lotus-t.jpg",
@@ -171,6 +193,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/moonpath-f.jpg",
     "thumb": "assets/img/moonpath-t.jpg",
@@ -200,6 +223,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/paddy-f.jpg",
     "thumb": "assets/img/paddy-t.jpg",
@@ -229,6 +253,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/saltgalaxy-f.jpg",
     "thumb": "assets/img/saltgalaxy-t.jpg",
@@ -258,6 +283,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/tulip-f.jpg",
     "thumb": "assets/img/tulip-t.jpg",
@@ -287,6 +313,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/watertown-f.jpg",
     "thumb": "assets/img/watertown-t.jpg",
@@ -316,6 +343,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/sunflower-f.jpg",
     "thumb": "assets/img/sunflower-t.jpg",
@@ -345,6 +373,7 @@
     "壁纸",
     "分层构图"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/snowforest-f.jpg",
     "thumb": "assets/img/snowforest-t.jpg",
@@ -374,6 +403,7 @@
     "三视图",
     "提示词迭代"
    ],
+   "group": "character",
    "media": {
     "full": "assets/img/asset1-f.jpg",
     "thumb": "assets/img/asset1-t.jpg",
@@ -403,6 +433,7 @@
     "三视图",
     "资产"
    ],
+   "group": "character",
    "media": {
     "full": "assets/img/asset2-f.jpg",
     "thumb": "assets/img/asset2-t.jpg",
@@ -432,6 +463,7 @@
     "空间",
     "资产"
    ],
+   "group": "plate",
    "media": {
     "full": "assets/img/asset3-f.jpg",
     "thumb": "assets/img/asset3-t.jpg",
@@ -461,6 +493,7 @@
     "动作",
     "运镜"
    ],
+   "group": "video",
    "media": {
     "full": null,
     "thumb": "assets/poster/v00164.jpg",
@@ -490,6 +523,7 @@
     "动作",
     "运镜"
    ],
+   "group": "video",
    "media": {
     "full": null,
     "thumb": "assets/poster/v00165.jpg",
@@ -519,6 +553,7 @@
     "动作",
     "运镜"
    ],
+   "group": "video",
    "media": {
     "full": null,
     "thumb": "assets/poster/v00167.jpg",

@@ -72,14 +72,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .rule{max-width:1680px;margin:clamp(16px,2.2vw,24px) auto 0;padding:0 var(--pad)}
 .rule i{display:block;height:1px;background:var(--rule)}
 
-/* ── 样本网格 ───────────────────────────────────────── */
-.sheet{max-width:1680px;margin:0 auto;padding:var(--gap) var(--pad) 0;display:flex;gap:var(--gap);align-items:flex-start}
-.col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:var(--gap)}
+/* ── 样本网格：按类分段，段内统一比例与列宽 ───────────── */
+.sheet{max-width:1680px;margin:0 auto;padding:0 var(--pad)}
+.group{padding-top:clamp(26px,3.6vw,44px)}
+.group-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:10px;border-bottom:1px solid var(--rule-2);margin-bottom:var(--gap)}
+.group-hd h2{margin:0;font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.01em}
+.group-hd .n{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.group-hd .note{margin-left:auto;font-size:12.5px;color:var(--ink-3)}
+.grid{display:grid;gap:var(--gap);grid-template-columns:repeat(var(--cols,4),minmax(0,1fr))}
 .s{display:block;width:100%;text-align:left;padding:0;position:relative;color:inherit;text-decoration:none;
   animation:rise .5s var(--ease) both}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.s-media{position:relative;background:var(--wash);overflow:hidden}
-.s-media img{display:block;width:100%;height:auto;transition:filter .3s var(--ease)}
+.s-media{position:relative;background:var(--wash);overflow:hidden;aspect-ratio:var(--ar,4 / 3)}
+.s-media img{display:block;width:100%;height:100%;object-fit:contain;transition:filter .3s var(--ease)}
 .s:hover .s-media img{filter:brightness(1.03)}
 .s:hover .s-media::after{opacity:1}
 .s-media::after{content:"";position:absolute;inset:0;border:1px solid var(--signal);
@@ -96,12 +102,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (hover:none){.s-go{opacity:.9}}
 .s-no{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
 .s-title{margin:2px 0 0;font-family:var(--serif);font-size:16.5px;font-weight:600;line-height:1.35;
-  letter-spacing:-.005em}
+  letter-spacing:-.005em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;min-height:calc(2 * 1.35em)}
 .s-prompt{margin:5px 0 0;font-family:var(--mono);font-size:10.5px;line-height:1.55;color:var(--ink-2);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  word-break:break-word}
+  word-break:break-word;min-height:38px}
 .s-prompt.zh{font-family:var(--sans);font-size:11.5px;line-height:1.6}
-.s-spec{margin:7px 0 0;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.01em}
+.s-spec{margin:7px 0 0;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .s-spec b{font-weight:500;color:var(--ink-2)}
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
@@ -199,6 +206,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .tabs button{padding:0 8px}
   .intro{padding-top:22px}
   .intro-right{display:none}
+  .group-hd .note{display:none}
+  .group-hd h2{font-size:19px}
   .v-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,34vh) minmax(0,1fr)}
   .v-stage{padding:12px}
   .v-stage img,.v-stage video{max-height:min(30vh,320px)}
@@ -227,10 +236,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <header class="bar">
   <div class="bar-in">
     <a class="brand" href="/">prompt<i>.</i><em>x7peeps</em></a>
-    <nav class="tabs" aria-label="按类型筛选">
+    <nav class="tabs" aria-label="按分类筛选">
       <button type="button" aria-pressed="true" data-filter="all">全部 <b id="c-all">0</b></button>
-      <button type="button" aria-pressed="false" data-filter="image">图像 <b id="c-image">0</b></button>
-      <button type="button" aria-pressed="false" data-filter="video">视频 <b id="c-video">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="video">动作镜头 <b id="c-video">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="character">人物资产 <b id="c-character">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="plate">壁纸 <b id="c-plate">0</b></button>
     </nav>
     <div class="bar-meta"><span id="updated"></span><span id="models"></span></div>
   </div>
@@ -305,7 +315,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   "use strict";
   var SHEET = document.getElementById("sheet");
   var VIEWER = document.getElementById("viewer");
-  var state = { all: [], list: [], filter: "all", idx: -1, cols: 0, lastFocus: null };
+  var state = { all: [], list: [], filter: "all", idx: -1, cols: "", lastFocus: null };
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -368,47 +378,74 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     return el;
   }
 
-  function colsFor(w) {
-    if (w >= 1320) return 4;
-    if (w >= 980) return 3;
-    if (w >= 620) return 2;
-    return 1;
+  // 每类一个网格：列数按视口给，段内卡片比例一致所以天然等高
+  var GROUPS = [
+    { id: "video", cols: [3, 2, 1], ar: "16 / 9" },
+    { id: "character", cols: [3, 2, 1], ar: "4 / 3" },
+    { id: "plate", cols: [5, 3, 2], ar: "9 / 16" }
+  ];
+  var GMETA = {};
+
+  function colsForViewport(id) {
+    var g = GROUPS.filter(function (x) { return x.id === id; })[0];
+    var c = g ? g.cols : [4, 3, 2];
+    var w = window.innerWidth;
+    return w >= 1100 ? c[0] : (w >= 700 ? c[1] : c[2]);
   }
 
   function render() {
-    var cols = Math.max(1, Math.min(colsFor(window.innerWidth), state.list.length || 1));
-    state.cols = cols;
     SHEET.textContent = "";
     $("empty").hidden = state.list.length > 0;
     if (!state.list.length) return;
-    var holders = [];
-    for (var c = 0; c < cols; c++) {
-      var d = document.createElement("div");
-      d.className = "col";
-      SHEET.appendChild(d);
-      holders.push({ el: d, h: 0 });
-    }
-    var ratioOf = function (s) {
-      return s.kind === "video" ? 9 / 16 : (s.aspect === "9:16" ? 16 / 9 : (s.aspect === "4:3" ? 0.75 : 9 / 16));
-    };
-    // 第一行：前 cols 个各占一列，保证首屏每一列顶部是完整可见的样本；
-    // 其余按高度降序做 LPT（最长优先），把列尾高差压到最小
-    var head = state.list.slice(0, cols);
-    var rest = state.list.slice(cols).sort(function (a, b) { return ratioOf(b) - ratioOf(a); });
-    head.forEach(function (s, i) {
-      holders[i].el.appendChild(makeCard(s, i));
-      holders[i].h += ratioOf(s) + 0.42;
-    });
-    rest.forEach(function (s, k) {
-      holders.sort(function (a, b) { return a.h - b.h; });
-      holders[0].el.appendChild(makeCard(s, cols + k));
-      holders[0].h += ratioOf(s) + 0.42;
+
+    var show = state.filter === "all"
+      ? GROUPS.map(function (g) { return g.id; })
+      : [state.filter];
+
+    var seq = 0;
+    show.forEach(function (gid) {
+      var items = state.list.filter(function (s) { return s.group === gid; });
+      if (!items.length) return;
+      var meta = GMETA[gid] || { label: gid, note: "" };
+
+      var wrap = document.createElement("section");
+      wrap.className = "group";
+      wrap.setAttribute("aria-labelledby", "g-" + gid);
+
+      var hd = document.createElement("div");
+      hd.className = "group-hd";
+      var h2 = document.createElement("h2");
+      h2.id = "g-" + gid;
+      h2.textContent = meta.label;
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = items.length + " 条";
+      hd.append(h2, n);
+      if (meta.note) {
+        var nt = document.createElement("span");
+        nt.className = "note";
+        nt.textContent = meta.note;
+        hd.appendChild(nt);
+      }
+
+      var grid = document.createElement("div");
+      grid.className = "grid";
+      grid.style.setProperty("--cols", String(colsForViewport(gid)));
+      var gcfg = GROUPS.filter(function (x) { return x.id === gid; })[0];
+      if (gcfg && gcfg.ar) grid.style.setProperty("--ar", gcfg.ar);
+      items.forEach(function (s) {
+        grid.appendChild(makeCard(s, seq));
+        seq += 1;
+      });
+
+      wrap.append(hd, grid);
+      SHEET.appendChild(wrap);
     });
   }
 
   function applyFilter(f) {
     state.filter = f;
-    state.list = f === "all" ? state.all.slice() : state.all.filter(function (s) { return s.kind === f; });
+    state.list = f === "all" ? state.all.slice() : state.all.filter(function (s) { return s.group === f; });
     document.querySelectorAll(".tabs button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.filter === f));
     });
@@ -573,7 +610,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   window.addEventListener("resize", function () {
     clearTimeout(rt);
     rt = setTimeout(function () {
-      if (colsFor(window.innerWidth) !== state.cols) render();
+      var sig = GROUPS.map(function (g) { return colsForViewport(g.id); }).join(",");
+      if (sig !== state.cols) { state.cols = sig; render(); }
     }, 160);
   });
 
@@ -583,6 +621,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     .then(function (payload) {
       var data = Array.isArray(payload) ? payload : (payload.samples || []);
       var updated = (!Array.isArray(payload) && payload.updated) || "";
+      ((!Array.isArray(payload) && payload.groups) || []).forEach(function (g) { GMETA[g.id] = g; });
       var order = ["a-1","v-v00164","a-2","v-v00165",
                    "w-snowforest","v-v00167","w-watertown","a-3",
                    "w-lotus","w-glacier","w-moonpath","w-sunflower",
@@ -594,11 +633,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       data.forEach(function (s) { if (order.indexOf(s.id) < 0) sorted.push(s); });
       state.all = sorted;
 
-      var nImg = sorted.filter(function (s) { return s.kind === "image"; }).length;
-      var nVid = sorted.length - nImg;
       $("c-all").textContent = sorted.length;
-      $("c-image").textContent = nImg;
-      $("c-video").textContent = nVid;
+      sorted.forEach(function (s) { var el = $("c-" + s.group); if (el) el.textContent = (parseInt(el.textContent, 10) || 0) + 1; });
       $("h1-count").textContent = sorted.length;
       $("updated").textContent = updated ? "更新于 " + updated : "";
       var models = [];
