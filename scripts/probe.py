@@ -29,6 +29,18 @@ def static_checks():
     if not {"updated", "models", "samples"} <= set(data):
         bad(f"data: 顶层缺字段 {list(data)}")
     samples = data["samples"]
+    if "groups" in data:
+        gids = [g["id"] for g in data["groups"]]
+        used = {s.get("group") for s in samples}
+        if not used <= set(gids):
+            bad(f"data: 样本 group 超出 groups 元信息 {sorted(used - set(gids))}")
+        if set(gids) - used:
+            bad(f"data: groups 里有空段 {sorted(set(gids) - used)}")
+        for g in gids:
+            asp = {s["aspect"] for s in samples if s.get("group") == g}
+            if len(asp) > 1:
+                bad(f"data: 段 {g} 内比例不一致 {sorted(asp)}（同段必须等高）")
+        report["groups"] = {g: sum(1 for s in samples if s.get("group") == g) for g in gids}
     report["data"] = {"n": len(samples), "models": data["models"],
                       "kinds": {k: sum(1 for s in samples if s["kind"] == k) for k in ("image", "video")}}
     if any("H3 Ref2VA" in m for m in data["models"]):
