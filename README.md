@@ -9,7 +9,16 @@
 |---|---|---|
 | 图像 | 壁纸产线 `~/.hermes/artifacts/xhs-account/wallpapers/batch13–17`（MiniMax H3-Image，3072×5472） | 12 |
 | 图像 | 短剧实验室 `~/Projects/h3-drama-lab` 图槽资产（H3-Image，v2 全身版） | 3 |
+| 图像 | 荷塘巨物四机位（老大收集的提示词 → 4090 H3-Image 复现，6272×2688 / seed 5285） | 4 |
 | 视频 | 4090 ComfyUI · H3 Ref2VA（1344×768 / 52 帧） | 3 |
+
+## 动作提示词（`motion` 字段）
+
+荷塘四机位这四条的 `data/samples.json` 里多一个 `motion` 对象：`{title, prompt, note}`。
+它是这一镜**下游的图生视频提示词**，在详情页以蓝框单独渲染、单独复制。
+
+纪律：`motion.prompt` 写成**起始状态 → 动作 → 结束状态**的一镜到底，一镜只演一段戏；
+`motion.note` 只写一句「为什么这样写」，不重复 prompt 内容。
 
 ## 目录
 

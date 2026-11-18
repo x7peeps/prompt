@@ -176,6 +176,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .pbox.more:not(.at-end) .pbox-hd .hint{display:inline;color:var(--signal)}
 .pbox .hint{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em}
 .pbox pre.zh{font-family:var(--sans);font-size:13px;line-height:1.85;color:var(--ink-2)}
+
+/* 动作提示词：贴在静止样本下方，蓝框与样本提示词区分 */
+.mbox{margin:16px 0 0;border:1px solid var(--signal);position:relative}
+.mbox[hidden]{display:none}
+.mbox-hd{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px 0 12px;
+  border-bottom:1px solid var(--rule);background:var(--paper)}
+.mbox-hd span{font-family:var(--mono);font-size:10.5px;color:var(--signal);letter-spacing:.06em}
+.mbox-title{margin:0;padding:12px 12px 0;font-family:var(--serif);font-size:14.5px;font-weight:600;
+  color:var(--ink);letter-spacing:-.005em}
+.mbox pre{margin:0;padding:7px 12px 16px;max-height:clamp(170px,30vh,320px);overflow:auto;
+  font-family:var(--sans);font-size:13px;line-height:1.85;color:var(--ink-2);
+  white-space:pre-wrap;word-break:break-word;background:var(--paper)}
+.m-note{margin:10px 0 0;font-size:12px;line-height:1.8;color:var(--ink-3)}
+.m-note:empty{display:none}
 .seal{position:absolute;right:10px;bottom:-13px;width:26px;height:26px;display:grid;place-items:center;
   background:var(--paper);border:1.5px solid var(--seal);color:var(--seal);
   font-family:var(--serif);font-size:13px;line-height:1;transition:transform .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease)}
@@ -221,11 +235,21 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .pbox-hd{height:52px}
 }
 @media (max-width:520px){
+  .bar{height:auto}
+  .bar-in{height:auto;flex-wrap:wrap;padding:7px 0;gap:6px 10px}
+  .tabs{width:100%;margin-left:0;gap:0}
+  .tabs button{flex:1 1 0;justify-content:center;height:38px;padding:0 4px;white-space:nowrap;font-size:12.5px}
   .tabs button b{display:none}
   .intro h1{font-size:25px}
   .s-title{font-size:16.5px}
   .v-spec{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* 窄屏提示词条：字数与「滚动看全文」让位给标签和复制按钮，否则按钮文字折成两行 */
+  .pbox-hd .len,.mbox-hd .len{display:none}
+  .pbox.more:not(.at-end) .pbox-hd .hint{display:none}
+  .pbox-hd,.mbox-hd{gap:6px;padding:0 8px 0 10px}
+  .copy{font-size:11px;padding:0 9px;letter-spacing:0}
 }
+.copy{white-space:nowrap}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important;transition-duration:.001ms !important}
 }
@@ -238,8 +262,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <a class="brand" href="/">prompt<i>.</i><em>x7peeps</em></a>
     <nav class="tabs" aria-label="按分类筛选">
       <button type="button" aria-pressed="true" data-filter="all">全部 <b id="c-all">0</b></button>
-      <button type="button" aria-pressed="false" data-filter="video">动作镜头 <b id="c-video">0</b></button>
-      <button type="button" aria-pressed="false" data-filter="character">人物资产 <b id="c-character">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="lotus">四机位 <b id="c-lotus">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="video">动作 <b id="c-video">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="character">人物 <b id="c-character">0</b></button>
       <button type="button" aria-pressed="false" data-filter="plate">壁纸 <b id="c-plate">0</b></button>
     </nav>
     <div class="bar-meta"><span id="updated"></span><span id="models"></span></div>
@@ -249,7 +274,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <section class="intro">
   <div>
     <h1>提示词样本册，<span id="h1-count">—</span> 条</h1>
-    <p class="lede" id="lede">真实产线的图与视频，模型、尺寸与提示词原样保留；能给出种子的连种子一起给。点开可整段复制。</p>
+    <p class="lede" id="lede">真实产线的图与视频，模型、尺寸与提示词原样保留；能给出种子的连种子一起给。点开可整段复制，荷塘四机位那组每条还各带一条下游的动作提示词。</p>
   </div>
   <div class="intro-right">
     <p class="lede">没有排行榜，也没有点赞数。这里只有两件事：一条提示词写成了什么样，以及它在这一版模型上真的出来了什么。</p>
@@ -300,6 +325,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         </div>
         <pre id="v-prompt" tabindex="0"></pre>
       </div>
+      <div class="mbox" id="mbox" hidden>
+        <div class="mbox-hd">
+          <span>MOTION · 动作提示词</span>
+          <span class="len" id="m-len"></span>
+          <button class="copy" id="m-copy">复制动作提示词</button>
+        </div>
+        <p class="mbox-title" id="m-title"></p>
+        <pre id="m-prompt" tabindex="0"></pre>
+      </div>
+      <p class="m-note" id="m-note"></p>
       <div class="v-note">
         <h3>WHY IT WORKS · 为什么这条有效</h3>
         <p id="v-note"></p>
@@ -380,6 +415,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   // 每类一个网格：列数按视口给，段内卡片比例一致所以天然等高
   var GROUPS = [
+    { id: "lotus", cols: [2, 2, 1], ar: "16 / 9" },
     { id: "video", cols: [3, 2, 1], ar: "16 / 9" },
     { id: "character", cols: [3, 2, 1], ar: "4 / 3" },
     { id: "plate", cols: [5, 3, 2], ar: "9 / 16" }
@@ -525,6 +561,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     pre.textContent = s.prompt;
     pre.className = s.prompt_lang === "zh" ? "zh" : "";
     $("v-note").textContent = s.note || "";
+    var mbox = $("mbox");
+    if (s.motion && s.motion.prompt) {
+      mbox.hidden = false;
+      $("m-title").textContent = s.motion.title || "动作提示词";
+      $("m-prompt").textContent = s.motion.prompt;
+      $("m-len").textContent = fmt(s.motion.prompt.length) + " 字符";
+      $("m-note").textContent = s.motion.note ? "为什么这样写：" + s.motion.note : "";
+      var mb = $("m-copy");
+      mb.textContent = "复制动作提示词";
+      mb.classList.remove("done");
+    } else {
+      mbox.hidden = true;
+      $("m-note").textContent = "";
+    }
     var tags = $("v-tags");
     tags.textContent = "";
     (s.tags || []).forEach(function (t) { var i2 = document.createElement("i"); i2.textContent = t; tags.appendChild(i2); });
@@ -590,6 +640,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     }
   }
 
+  function copyMotion() {
+    var s = state.list[state.idx];
+    if (!s || !s.motion || !s.motion.prompt) return;
+    var text = s.motion.prompt, b = $("m-copy");
+    var reset = function () { b.textContent = "复制动作提示词"; b.classList.remove("done"); };
+    var done = function () {
+      b.textContent = "已复制 · " + fmt(text.length) + " 字符";
+      b.classList.add("done");
+      clearTimeout(copyMotion._t);
+      copyMotion._t = setTimeout(reset, 2600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {});
+    }
+  }
+
   // ── 事件 ──
   document.querySelectorAll(".tabs button").forEach(function (b) {
     b.addEventListener("click", function () { applyFilter(b.dataset.filter); });
@@ -598,6 +664,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   $("v-prev").addEventListener("click", function () { step(-1); });
   $("v-next").addEventListener("click", function () { step(1); });
   $("v-copy").addEventListener("click", copyPrompt);
+  $("m-copy").addEventListener("click", copyMotion);
   $("v-prompt").addEventListener("scroll", checkPromptOverflow, { passive: true });
   VIEWER.addEventListener("click", function (e) { if (e.target === VIEWER) close(); });
   document.addEventListener("keydown", function (e) {
@@ -622,7 +689,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       var data = Array.isArray(payload) ? payload : (payload.samples || []);
       var updated = (!Array.isArray(payload) && payload.updated) || "";
       ((!Array.isArray(payload) && payload.groups) || []).forEach(function (g) { GMETA[g.id] = g; });
-      var order = ["a-1","v-v00164","a-2","v-v00165",
+      var order = ["l-under","l-top","l-mid","l-close",
+                   "a-1","v-v00164","a-2","v-v00165",
                    "w-snowforest","v-v00167","w-watertown","a-3",
                    "w-lotus","w-glacier","w-moonpath","w-sunflower",
                    "w-paddy","w-cliff","w-tulip","w-saltgalaxy",

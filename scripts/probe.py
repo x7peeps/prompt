@@ -41,6 +41,8 @@ def static_checks():
             if len(asp) > 1:
                 bad(f"data: 段 {g} 内比例不一致 {sorted(asp)}（同段必须等高）")
         report["groups"] = {g: sum(1 for s in samples if s.get("group") == g) for g in gids}
+        report["n_tabs"] = len(gids) + 1  # 各分段 + 「全部」
+    report["has_motion"] = sum(1 for s in samples if (s.get("motion") or {}).get("prompt"))
     report["data"] = {"n": len(samples), "models": data["models"],
                       "kinds": {k: sum(1 for s in samples if s["kind"] == k) for k in ("image", "video")}}
     if any("H3 Ref2VA" in m for m in data["models"]):
@@ -90,6 +92,12 @@ with sync_playwright() as p:
             return visible.length > 0 && visible.filter(i => i.complete && i.naturalWidth > 0).length >= Math.min(4, visible.length);
         }""", timeout=25000)
         pg.wait_for_timeout(600)
+        # 入场动画（rise: translateY）跑完再量几何，否则偶尔会抓到动画中的中间态
+        try:
+            pg.wait_for_function("() => document.getAnimations().every(a => a.playState !== 'running')", timeout=4000)
+        except Exception:
+            pass
+        pg.wait_for_timeout(120)
 
         m = pg.evaluate("""() => {
           const de = document.documentElement, bd = document.body;
@@ -142,8 +150,8 @@ with sync_playwright() as p:
             bad(f"{name}: 存在非 <a> 卡片")
         if not m["h1"] or str(report["data"]["n"]) not in m["h1"]:
             bad(f"{name}: H1 条数与数据不一致 -> {m['h1']}")
-        if m["tabsPressed"] != 4:
-            bad(f"{name}: 筛选按钮 aria-pressed 数 {m['tabsPressed']} ≠ 4")
+        if m["tabsPressed"] != report.get("n_tabs", 4):
+            bad(f"{name}: 筛选按钮 aria-pressed 数 {m['tabsPressed']} ≠ {report.get('n_tabs', 4)}")
         if not all(x in m["legend"] for x in report["data"]["models"]):
             bad(f"{name}: 图例未覆盖全部模型 -> {m['legend']}")
         if m["goPos"] != "absolute" or "s-media" not in (m["goInMedia"] or ""):
@@ -191,11 +199,22 @@ with sync_playwright() as p:
             pg.click("#v-copy")
             pg.wait_for_timeout(500)
             c = pg.evaluate("""() => ({label: document.getElementById('v-copy').textContent,
-                                      seal: document.getElementById('seal').classList.contains('on')})""")
+                                      seal: document.getElementById('seal').classList.contains('on'),
+                                      mboxHidden: document.getElementById('mbox').hidden,
+                                      motionChars: document.getElementById('m-prompt').textContent.length})""")
             if "已复制" not in c["label"] or "字符" not in c["label"]:
                 bad(f"{name}: 复制反馈异常 -> {c['label']}")
             if not c["seal"]:
                 bad(f"{name}: 复制后印章未响应")
+            if report.get("has_motion"):
+                if c["mboxHidden"] or c["motionChars"] < 20:
+                    bad(f"{name}: 首条样本的动作提示词未渲染（hidden={c['mboxHidden']} chars={c['motionChars']}）")
+                else:
+                    pg.click("#m-copy")
+                    pg.wait_for_timeout(400)
+                    ml = pg.evaluate("() => document.getElementById('m-copy').textContent")
+                    if "已复制" not in ml:
+                        bad(f"{name}: 动作提示词复制反馈异常 -> {ml}")
             pg.screenshot(path=f"{OUT}/{name}-detail-copied.png", full_page=False)
             pg.keyboard.press("Escape")
             pg.wait_for_timeout(300)

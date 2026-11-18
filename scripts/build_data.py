@@ -152,6 +152,18 @@ rp = Path.home() / ".hermes/cache/scratch/h3rows.json"
 if rp.exists():
     rows = {r["files"][0]: r for r in json.load(open(rp))}
 
+# h3rows.json 是 scratch 缓存，随时会被清掉；缓存没了就沿用上一版 samples.json 里的中文提示词，
+# 不能因为一个临时文件缺失把已经核对过的提示词写成空字符串。
+prev_video_prompt = {}
+_prev = ROOT / "data/samples.json"
+if _prev.exists():
+    try:
+        for _s in json.loads(_prev.read_text(encoding="utf-8")).get("samples", []):
+            if _s.get("kind") == "video" and _s.get("prompt"):
+                prev_video_prompt[_s["id"]] = _s["prompt"]
+    except Exception as _e:
+        print("prev samples read fail", _e)
+
 for fname, title, sub, note in VIDEO_PICK:
     dst = VID / fname.lower().replace("hok_chain_", "v").replace("_.mp4", ".mp4")
     r = rows.get(fname, {})
@@ -200,19 +212,101 @@ for fname, title, sub, note in VIDEO_PICK:
         id="v-" + dst.stem, kind="video", title=title, subtitle=sub,
         model="MiniMax H3-Ref2VA", model_short="H3-Ref2VA",
         size="1344×768", aspect="16:9", seed=None, seconds=2.3, frames=52,
-        prompt=r.get("txt", "").strip(), prompt_lang="zh", lang_label="中文提示词",
+        prompt=(r.get("txt", "") or prev_video_prompt.get("v-" + dst.stem, "")).strip(),
+        prompt_lang="zh", lang_label="中文提示词",
         note=note, tags=["视频", "动作", "运镜"], group="video",
         media=dict(full=None, thumb=f"assets/poster/{poster.name}", video=f"assets/video/{dst.name}",
                    poster=f"assets/poster/{poster.name}"),
         source="4090 ComfyUI · H3 Ref2VA · 52 帧",
     ))
 
+# ── 4. 荷塘巨物 · 四机位（老大收集的生图提示词 → 4090 H3-Image 复现；每条附自己写的动作提示词）──
+LOTUS = Path.home() / ".hermes/artifacts/prompt-lotus"
+LOTUS_META = [
+    dict(
+        slug="p1", sid="l-under", src="p1.png",
+        title="水下仰拍 · 天空是一扇天窗",
+        sub="镜头泡在水里，贴住水面往正上方看",
+        note="这条试了三版才成。第一版模型给的是沿水线切开的半水面镜头（水下与天空同框，但透视没仰起来）；第二版真的从水底往上看、能看到船底，却把一条金鱼画到水面以上的空中；"
+             "第三版把「所有金鱼都在水面以下」「船体只占画面中部、上方留出天空」两句写进去才干净。教训：仰拍要给模型一个否定不掉的参照物——「看得到船底」比「垂直向上」更能逼出机位。",
+        tags=["四机位", "仰拍", "巨物感", "水下"],
+        motion=dict(
+            title="动作：手指点水，涟漪向下",
+            prompt="镜头保持在水下原位不动，水面上的木船轻轻左右晃动。小女孩伸出一根手指点进水里，指尖入水的瞬间，一圈涟漪从船边向下扩散，细小气泡成串升起，金鱼从画面两侧游过。结束时船和人都回到原位，光线与水面亮度不变。一镜到底，不剪辑，不切换机位。",
+            note="水下仰拍的运动会破坏「天窗」构图，所以只给它两个小动作（手指点水、船身轻晃），镜头一动不动。",
+        ),
+    ),
+    dict(
+        slug="p2", sid="l-top", src="p2.png",
+        title="高空俯拍 · 一片叶子占满前景",
+        sub="人与狗只有指甲盖大，巨物感全靠近大远小",
+        note="近大远小是这条的全部：前景叶片占满下缘，远处人与狗只有几个像素。想修掉叶心那个浅色圆盘，第二版整条跑成贴水面的低机位——巨物感更强，但「正上方俯拍」没了，圆盘也还在，所以站上用回第一版。"
+             "判据：画面里荷叶是顶视的放射状叶脉、船体侧壁看不见，这才是俯拍；另外原稿把「王莲 / water lily pad / Victoria」写在负向里，H3-Image 不吃负向，已改成正面的荷叶形态描述。",
+        tags=["四机位", "俯拍", "近大远小", "巨物感"],
+        motion=dict(
+            title="动作：船原地打转，水珠滚落",
+            prompt="镜头在正上方保持不动，只做极缓慢的推近。木船在原地轻轻打转，女孩抬头望向天空，狗的耳朵被风吹动；一片荷叶上的水珠滚落进水里，涟漪一圈圈散开。结束时船停回两片大叶之间，构图与开头一致。",
+            note="俯拍最怕镜头动，一动巨物感就散；把动势放在船和水珠上，机位只留一次几乎看不出的推近。",
+        ),
+    ),
+    dict(
+        slug="p3", sid="l-mid", src="p3.png",
+        title="中景 · 扯叶子，水帘落下",
+        sub="拉扯、倾斜、倾倒、溅起，四个状态都写成看得见的东西",
+        note="初版有两个硬伤：女孩的手悬在荷叶上方没有接触点，水帘是一根悬空的透明水柱。第二版把接触点写死（抓住最低处的叶缘、把叶缘往下拉、叶面被拉出折痕），并要求水幕「形状跟着叶缘走，是一片帘子，不是一根水柱」，才成立。"
+             "50mm + 浅景深在这里是必要的：背景荷叶一虚，手和水帘才立得住。原稿的负面词表（塑料皮肤 / 美颜滤镜 / 网红脸 / 面部模糊）也一并改写成正面：真实的皮肤质感、毛发根根分明。",
+        tags=["四机位", "中景", "水帘", "50mm"],
+        motion=dict(
+            title="动作：整片叶面倾倒",
+            prompt="镜头位置不变。女孩双手用力一扯荷叶边缘，整片叶面倾斜，积存的清水整片倾倒下来形成一道水帘；狗被水花溅到，往后缩了半步。水帘落进水里，荷叶回弹轻晃，水珠还悬在空中。结束在荷叶停止晃动、水面涟漪散开的一刻。一镜到底。",
+            note="图生视频要的是一个连续动作，不是四个：起手（扯）→ 过程（倾倒成帘）→ 余响（回弹、涟漪）。",
+        ),
+    ),
+    dict(
+        slug="p4", sid="l-close", src="p4.png",
+        title="近景 · 狗咬着莲蓬往后扯",
+        sub="两个动作同时发生，靠船头船尾把它们分开",
+        note="两个动作（船头狗扯莲蓬、船尾女孩撑篙）靠位置分开才不糊。第一版光线与巨伞荷叶都对，但女孩和狗被画到了两条船上；第二版把它们收回同一条船、茎杆也拉出了弓形，代价是天气跑成灰白阴天、背景荷叶没长成巨伞。"
+             "这条的真实结论：同一条船和弓形茎杆能写出来，梦幻暖光与巨物尺度还压不住，得分开生成或后期补光。原稿「用嘴哎住」是「咬住」的手误，已改。",
+        tags=["四机位", "近景", "双动作", "莲蓬"],
+        motion=dict(
+            title="动作：扯莲蓬 + 撑一篙",
+            prompt="镜头位置不变。狗咬着莲蓬的茎杆往后一扯，茎杆被拉成弓形，莲蓬被拉到狗鼻前；同一时间，女孩把竹篙往水里一撑，船身向前滑出半米。结束在船头轻轻一沉、水面涟漪扩散开的瞬间。一镜到底。",
+            note="两个动作要给两段时间差：狗先扯（前 1 秒），船再动（后 1 秒），否则两条动线会互相打架。",
+        ),
+    ),
+]
+
+for m in LOTUS_META:
+    src = LOTUS / str(m["src"])
+    stem = {"p1": "underwater", "p2": "aerial", "p3": "medium", "p4": "close"}[str(m["slug"])]
+    pf = LOTUS / f"{m['slug']}-{stem}.txt"
+    if not src.exists() or not pf.exists():
+        print("missing lotus", m["slug"], src.exists(), pf.exists()); continue
+    prompt = pf.read_text(encoding="utf-8").strip()
+    w, h = dims(src)
+    thumb = sips_resize(src, IMG / f"{m['sid']}-t.jpg", 820, 80)
+    full = sips_resize(src, IMG / f"{m['sid']}-f.jpg", 1800, 84)
+    if not thumb or not full:
+        print("lotus resize fail", m["slug"]); continue
+    samples.append(dict(
+        id=m["sid"], kind="image", title=m["title"], subtitle=m["sub"],
+        model="MiniMax H3-Image", model_short="H3-Image",
+        size=f"{w}×{h}", aspect="16:9", seed=5285, seconds=None, frames=None,
+        prompt=prompt, prompt_lang="zh", lang_label="中文提示词 · 原稿改编",
+        note=m["note"], tags=m["tags"], group="lotus",
+        media=dict(full=f"assets/img/{full.name}", thumb=f"assets/img/{thumb.name}", video=None, poster=None),
+        motion=m["motion"],
+        source="老大收集 · 荷塘巨物四机位 · 4090 H3-Image 复现（6272×2688 / seed 5285）",
+    ))
+
 out = ROOT / "data/samples.json"
 out.parent.mkdir(exist_ok=True)
 payload = {
-    "updated": "2026-11-17",
+    "updated": "2026-11-18",
     "models": sorted({s["model"] for s in samples}),
     "groups": [
+        {"id": "lotus", "label": "荷塘四机位", "note": "同一场景四个机位：水下仰拍 → 高空俯拍 → 中景 → 近景；四条各自独立生成（未锁参考图），人、狗与服装不跨镜一致"},
         {"id": "character", "label": "人物资产", "note": "三视图：同一人、同一光位、三格完整全身"},
         {"id": "video", "label": "动作镜头", "note": "图生视频：起始状态 → 动作 → 结束状态"},
         {"id": "plate", "label": "壁纸与场景", "note": "竖版 9:16：12 张 8K 风景 + 1 个短剧场景"},
