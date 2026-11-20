@@ -1,0 +1,29 @@
+{
+  "qwen-image-txt2img-8190": {
+    "title": "Qwen-Image 文生图（4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "file": "workflows/qwen-image-txt2img-8190.json",
+    "model": "Qwen-Image fp8 (19GB)",
+    "use_for": "中文文字渲染准确的文生图；海报/排版类；需要中文标题时优先",
+    "params": { "steps": 20, "cfg": 4.0, "sampler": "euler/simple", "size": "1024x1024" },
+    "verified": "2026-11-21 实测出图成功（1024x1024，约 4 分钟）"
+  },
+  "h3-image-txt2img-8190": {
+    "title": "MiniMax H3-Image 文生图（4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "file": "workflows/h3-image-txt2img-8190.json",
+    "model": "MiniMax H3-Image w4a8 (11.7GB)",
+    "use_for": "等高线/肌理/质感类；大图直出（最大 3072×5472=16.8MP，其它分辨率见 _meta）；中文提示词可用",
+    "params": { "steps": 6, "cfg": 1.0, "sampler": "euler/simple", "size": "3072x4608 (2:3)" },
+    "verified": "2026-11-21 实测出图 3072x4608，32 秒"
+  },
+  "contour-split-poster-8190": {
+    "title": "上下对半·等高线海报（老大原创提示词，4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "file": "workflows/contour-split-poster-8190.json",
+    "model": "同 h3-image-txt2img-8190",
+    "use_for": "上下对半分割海报：上半写实风景摄影 + 下半单线等高线浮雕；prompt 已固化为老大原文",
+    "params": { "steps": 6, "cfg": 1.0, "size": "3072x4608" },
+    "verified": "2026-11-21 实测出图成功，结果已入站（prompt-site 站 contour 段）"
+  }
+}

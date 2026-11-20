@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "name": "contour-split-poster-8190",
+    "title": "上下对半·等高线海报（老大原创提示词，4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "comfyui": "v0.45.3 (ComfyUI Desktop standalone)",
+    "prompt_source": "老大 2026-11-20 原创提示词（prompt-site/contour 段）",
+    "note": "这是 H3-Image 文生图的特例：prompt 用老大的原文，尺寸 3072×4608",
+    "verified": "2026-11-21 实测出图 3072×4608，32 秒，已入站 p-contour 段"
+  },
+  "_inherit": "h3-image-txt2img-8190.json",
+  "_prompt_override": "画面上下对半分割，上半部分是高清写实风景摄影;下半部分严格复刻上方风景的地形轮廓，单线等高波浪线雕刻艺术，细密平行曲线构成浮雕肌理，矢量线条画，低饱和柔和配色，无大面积填充。左下角放置简约英文标题小字，右上角放迷你英文备注文字，现代极简海报版式，上下景物轮廓完全对齐，干净高级，竖版构图",
+  "_size_override": { "width": 3072, "height": 4608 }
+}

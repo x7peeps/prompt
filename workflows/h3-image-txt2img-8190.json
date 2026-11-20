@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "name": "h3-image-txt2img-8190",
+    "title": "MiniMax H3-Image 文生图（4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "comfyui": "v0.45.3 (ComfyUI Desktop standalone)",
+    "gpu": "RTX 4090 D 24GB",
+    "models": {
+      "unet": "minimax_h3_image_pruned_w4a8.safetensors (11.69GB, 库 D:\\ComfyUI-H3Image\\models\\diffusion_models)",
+      "clip": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors (库 D:\\ComfyUI-H3Image\\models\\text_encoders)",
+      "vae": "minimax_h3_image_vae_fp16.safetensors (库 D:\\ComfyUI-H3Image\\models\\vae)"
+    },
+    "cli_type": "minimax（注意不是 minimax_h3）",
+    "latents": "H3 走 conditioning 节点自带 latent（输出 slot 1），无需 EmptyLatentImage",
+    "verified": "2026-11-21 实测出图 3072x4608 (14MP)，耗时 32 秒",
+    "note": "steps 6 / cfg 1.0 / euler+simple；ConditioningZeroOut 做负面；中英文文字渲染准确（待再验），等高线/肌理质感强"
+  },
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "minimax_h3_image_pruned_w4a8.safetensors", "weight_dtype": "default" }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors", "type": "minimax", "device": "default" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "minimax_h3_image_vae_fp16.safetensors" }
+  },
+  "4": {
+    "class_type": "MiniMaxH3ImageConditioning",
+    "inputs": {
+      "prompt": "<PROMPT>",
+      "width": 3072,
+      "height": 4608,
+      "clip": ["2", 0],
+      "vae": ["3", 0]
+    }
+  },
+  "5": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": { "conditioning": ["4", 0] }
+  },
+  "6": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 20261121, "steps": 6, "cfg": 1.0,
+      "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0,
+      "model": ["1", 0], "positive": ["4", 0], "negative": ["5", 0], "latent_image": ["4", 1]
+    }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["6", 0], "vae": ["3", 0] }
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": { "filename_prefix": "prompt-site/<NAME>", "images": ["7", 0] }
+  }
+}

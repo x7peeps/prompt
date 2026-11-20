@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "name": "qwen-image-txt2img-8190",
+    "title": "Qwen-Image 文生图（4090 Desktop 8190）",
+    "host": "http://192.168.3.7:8190",
+    "comfyui": "v0.45.3 (ComfyUI Desktop standalone)",
+    "python": "3.13.12",
+    "gpu": "RTX 4090 D 24GB",
+    "models": {
+      "unet": "qwen_image_fp8_e4m3fn.safetensors (19.03GB, 库 D:\\ComfyUI\\models\\diffusion_models)",
+      "clip": "qwen_2.5_vl_7b_fp8_scaled.safetensors (库 D:\\ComfyUI\\models\\text_encoders)",
+      "vae": "qwen_image_vae.safetensors (库 D:\\ComfyUI\\models\\vae)"
+    },
+    "verified": "2026-11-21 实测出图 1024x1024，耗时约 4 分钟",
+    "note": "中文文字渲染准确；steps 20 / cfg 4.0 / euler+simple"
+  },
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "qwen_image_fp8_e4m3fn.safetensors", "weight_dtype": "fp8_e4m3fn" }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors", "type": "qwen_image", "device": "default" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "qwen_image_vae.safetensors" }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "<PROMPT>", "clip": ["2", 0] }
+  },
+  "5": {
+    "class_type": "EmptySD3LatentImage",
+    "inputs": { "width": 1024, "height": 1024, "batch_size": 1 }
+  },
+  "6": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 20261121, "steps": 20, "cfg": 4.0,
+      "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0,
+      "model": ["1", 0], "positive": ["4", 0], "negative": ["4", 0], "latent_image": ["5", 0]
+    }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["6", 0], "vae": ["3", 0] }
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": { "filename_prefix": "prompt-site/<NAME>", "images": ["7", 0] }
+  }
+}
