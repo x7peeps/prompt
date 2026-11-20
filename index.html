@@ -549,6 +549,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   function renderGallery(s, idx) {
     var stage = $("v-stage");
     var imgs = s.media.images;
+    var go = function (i) { renderGallery(s, (i + imgs.length) % imgs.length); };
     stage.textContent = "";
     state.galIdx = idx;
 
@@ -575,12 +576,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       b.type = "button";
       b.style.backgroundImage = "url(" + im.thumb + ")";
       b.setAttribute("aria-label", "结果 " + (i + 1));
-      b.addEventListener("click", function () { renderGallery(s, i); });
+      b.addEventListener("click", function () { go(i); });
       strip.appendChild(b);
     });
     stage.append(gal, cap, strip);
-    prev.addEventListener("click", function () { renderGallery(s, (idx - 1 + imgs.length) % imgs.length); });
-    next.addEventListener("click", function () { renderGallery(s, (idx + 1) % imgs.length); });
+    prev.addEventListener("click", function () { go(idx - 1); });
+    next.addEventListener("click", function () { go(idx + 1); });
   }
 
   function open(i) {
