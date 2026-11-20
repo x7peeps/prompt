@@ -327,6 +327,34 @@ if poster_imgs:
         source="抖音 @Cooper说 · 作品 7702745040682758223 · 提示词原文照录",
     ))
 
+
+
+# ── 5. 上下对半 · 等高线海报（老大原创提示词；两个模型同题各跑一版）──
+CONTOUR_PROMPT = """画面上下对半分割，上半部分是高清写实风景摄影;下半部分严格复刻上方风景的地形轮廓，单线等高波浪线雕刻艺术，细密平行曲线构成浮雕肌理，矢量线条画，低饱和柔和配色，无大面积填充。左下角放置简约英文标题小字，右上角放迷你英文备注文字，现代极简海报版式，上下景物轮廓完全对齐，干净高级，竖版构图"""
+
+CONTOUR_NOTE = """同一条提示词，gpt-image-2 与 4090 上的 MiniMax H3-Image 各跑一版，差别全在「执行」不在「理解」：两个模型都做对了上下分屏与下半等高线肌理，H3 的等高线浮雕质感更细腻漂亮，代价是它把标题放到了左上角而不是左下角，英文标题和右上角备注都渲染成了乱码（'ONHESLEN'），上下轮廓只是近似对应；gpt-image-2 的英文文字准确（左下 'Contours of the Mountain'、右上 'MOUNTAIN TOPOGRAPHY'），接缝处山脊与等高线严丝合缝，代价是等高线肌理略平。这条提示词最难的不是画风景，是「同一个轮廓要在写实与矢量两种表现手法里完全对齐」——模型得在同一张图里同时维持两套几何；再加上文字渲染，这正好是文生图目前最薄弱的两块。这张图用 gpt-image-2 出的是原文的结构化改写版（把上下半的画面元素拆成分句，并显式要求接缝严丝合缝），H3 那张跑的是原文一字不改。"""
+
+contour_imgs = []
+for _n, _label in (("gpt", "gpt-image-2"), ("h3", "MiniMax H3-Image")):
+    _t = IMG / "contour" / f"contour-{_n}-t.jpg"
+    _f = IMG / "contour" / f"contour-{_n}-f.jpg"
+    if _t.exists() and _f.exists():
+        contour_imgs.append({"thumb": f"assets/img/contour/{_t.name}",
+                              "full": f"assets/img/contour/{_f.name}", "model": _label})
+
+if contour_imgs:
+    samples.append(dict(
+        id="p-contour", kind="set", group="contour", set_type="双模型对比",
+        title="上下对半 · 等高线海报", subtitle="一条提示词，两个模型各跑一版",
+        model="gpt-image-2 / MiniMax H3-Image", model_short="双模型对比",
+        size="1024×1536 / 3072×4608", aspect="2:3", seed=None, seconds=None, frames=None,
+        prompt=CONTOUR_PROMPT, prompt_lang="zh", lang_label="中文提示词",
+        note=CONTOUR_NOTE, tags=["上下对半", "等高线", "海报", "模型对比"],
+        media=dict(full=contour_imgs[0]["full"], thumb=contour_imgs[0]["thumb"],
+                   video=None, poster=None, images=contour_imgs),
+        source="老大原创提示词 · gpt-image-2 与 4090 MiniMax H3-Image 同题各跑一版",
+    ))
+
 out = ROOT / "data/samples.json"
 out.parent.mkdir(exist_ok=True)
 payload = {
@@ -337,6 +365,7 @@ payload = {
         {"id": "character", "label": "人物资产", "note": "三视图：同一人、同一光位、三格完整全身"},
         {"id": "video", "label": "动作镜头", "note": "图生视频：起始状态 → 动作 → 结束状态"},
         {"id": "poster", "label": "照片转海报", "note": "图生图：一条提示词 × 15 张原照片"},
+        {"id": "contour", "label": "上下对半 · 等高线海报", "note": "一条提示词，两个模型同题各跑一版"},
         {"id": "plate", "label": "壁纸与场景", "note": "竖版 9:16：12 张 8K 风景 + 1 个短剧场景"},
     ],
     "samples": samples,

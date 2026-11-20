@@ -276,6 +276,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       <button type="button" aria-pressed="false" data-filter="video">动作 <b id="c-video">0</b></button>
       <button type="button" aria-pressed="false" data-filter="character">人物 <b id="c-character">0</b></button>
       <button type="button" aria-pressed="false" data-filter="poster">海报 <b id="c-poster">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="contour">等高线 <b id="c-contour">0</b></button>
       <button type="button" aria-pressed="false" data-filter="plate">壁纸 <b id="c-plate">0</b></button>
     </nav>
     <div class="bar-meta"><span id="updated"></span><span id="models"></span></div>
@@ -379,7 +380,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     el.className = "s";
     el.href = "#" + s.id;
     el.style.animationDelay = Math.min(i, 14) * 22 + "ms";
-    var kindLabel = s.kind === "video" ? "视频" : (s.kind === "set" ? "图生图" : "图像");
+    var kindLabel = s.kind === "video" ? "视频" : (s.kind === "set" ? (s.set_type || "图生图") : "图像");
     el.setAttribute("aria-label", s.title + "，" + kindLabel + "样本，打开查看完整提示词");
 
     var media = document.createElement("div");
@@ -408,7 +409,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     info.className = "s-info";
     var no = document.createElement("div");
     no.className = "s-no";
-    no.textContent = (s.kind === "video" ? "视频" : (s.kind === "set" ? "图生图" : "图像"))
+    no.textContent = (s.kind === "video" ? "视频" : (s.kind === "set" ? (s.set_type || "图生图") : "图像"))
       + (s.prompt_lang === "zh" ? " · 中文提示词" : " · 英文提示词");
     var title = document.createElement("h3");
     title.className = "s-title";
@@ -438,6 +439,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     { id: "video", cols: [3, 2, 1], ar: "16 / 9" },
     { id: "character", cols: [3, 2, 1], ar: "4 / 3" },
     { id: "poster", cols: [4, 3, 2], ar: "3 / 4" },
+    { id: "contour", cols: [3, 2, 1], ar: "2 / 3" },
     { id: "plate", cols: [5, 3, 2], ar: "9 / 16" }
   ];
   var GMETA = {};
@@ -514,10 +516,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   // ── 详情 ──
   function specRows(s) {
-    var rows = [["模型", s.model_short], ["尺寸", s.size], ["比例", s.aspect],
+    var rows = [["模型", s.model], ["尺寸", s.size], ["比例", s.aspect],
                 ["种子", s.seed != null ? String(s.seed) : (s.kind === "set" ? "未提供" : "—")],
                 ["类型", s.kind === "video" ? "视频 " + s.seconds + "s / " + s.frames + " 帧"
-                        : (s.kind === "set" ? "图生图 · " + ((s.media.images || []).length) + " 张结果" : "图像")],
+                        : (s.kind === "set" ? (s.set_type || "图生图") + " · " + ((s.media.images || []).length) + " 张结果" : "图像")],
                 ["提示词", s.prompt_lang === "zh" ? "中文原文" : "英文原文"]];
     var dl = $("v-spec");
     dl.textContent = "";
@@ -567,7 +569,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
     var cap = document.createElement("div");
     cap.className = "v-cap";
-    cap.textContent = "结果 " + (idx + 1) + " / " + imgs.length + " · 同一条提示词，不同原照片";
+    var who = imgs[idx].model ? " · " + imgs[idx].model : "";
+    cap.textContent = "结果 " + (idx + 1) + " / " + imgs.length + who
+      + (imgs.length > 2 ? " · 同一条提示词，不同原照片" : "");
     var strip = document.createElement("div");
     strip.className = "gal-strip";
     imgs.forEach(function (im, i) {
