@@ -143,6 +143,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .v-stage img,.v-stage video{display:block;max-width:100%;max-height:calc(100vh - 176px);
   width:auto;height:auto;object-fit:contain;box-shadow:0 1px 0 rgba(17,19,16,.14)}
 .v-stage video{background:#000}
+.gal{display:flex;align-items:center;gap:10px;max-width:100%}
+.gal img{max-height:calc(100vh - 252px);width:auto;max-width:100%;object-fit:contain}
+.gal-nav{width:36px;height:36px;flex:0 0 auto;border:1px solid var(--rule-2);
+  background:rgba(243,244,241,.8);color:var(--ink);font-family:var(--mono);font-size:15px;
+  transition:border-color .16s var(--ease)}
+.gal-nav:hover{border-color:var(--ink)}
+.gal-strip{display:flex;gap:6px;overflow-x:auto;max-width:min(94vw,780px);padding-bottom:6px;
+  align-self:center;scrollbar-width:thin}
+.gal-th{width:42px;height:56px;flex:0 0 auto;background-size:cover;background-position:center;
+  background-color:var(--wash);border:1px solid transparent;transition:border-color .16s var(--ease)}
+.gal-th.on{border-color:var(--signal)}
 .v-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);letter-spacing:.02em;text-align:center}
 .v-side{min-width:0;overflow-y:auto;padding:clamp(22px,2.4vw,32px) clamp(18px,2.2vw,30px) 44px;
   border-left:1px solid var(--rule)}
@@ -264,6 +275,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       <button type="button" aria-pressed="false" data-filter="lotus">四机位 <b id="c-lotus">0</b></button>
       <button type="button" aria-pressed="false" data-filter="video">动作 <b id="c-video">0</b></button>
       <button type="button" aria-pressed="false" data-filter="character">人物 <b id="c-character">0</b></button>
+      <button type="button" aria-pressed="false" data-filter="poster">海报 <b id="c-poster">0</b></button>
       <button type="button" aria-pressed="false" data-filter="plate">壁纸 <b id="c-plate">0</b></button>
     </nav>
     <div class="bar-meta"><span id="updated"></span><span id="models"></span></div>
@@ -367,7 +379,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     el.className = "s";
     el.href = "#" + s.id;
     el.style.animationDelay = Math.min(i, 14) * 22 + "ms";
-    el.setAttribute("aria-label", s.title + "，" + (s.kind === "video" ? "视频" : "图像") + "样本，打开查看完整提示词");
+    var kindLabel = s.kind === "video" ? "视频" : (s.kind === "set" ? "图生图" : "图像");
+    el.setAttribute("aria-label", s.title + "，" + kindLabel + "样本，打开查看完整提示词");
 
     var media = document.createElement("div");
     media.className = "s-media";
@@ -376,20 +389,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     img.decoding = "async";
     img.src = s.media.thumb;
     img.alt = s.title + " 的生成结果";
-    img.width = 400; img.height = Math.round(400 * (s.aspect === "9:16" ? 16 / 9 : (s.aspect === "4:3" ? 0.75 : 9 / 16)));
+    var ar = s.aspect === "9:16" ? 16 / 9 : (s.aspect === "4:3" ? 0.75 : (s.aspect === "3:4" ? 4 / 3 : (s.aspect === "21:9" ? 9 / 21 : 9 / 16)));
+    img.width = 400; img.height = Math.round(400 * ar);
     media.appendChild(img);
     if (s.kind === "video") {
       var tag = document.createElement("span");
       tag.className = "s-kind";
       tag.innerHTML = '<svg viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0l8 4-8 4z"/></svg>' + s.seconds + "s";
       media.appendChild(tag);
+    } else if (s.kind === "set" && s.media.images) {
+      var stag = document.createElement("span");
+      stag.className = "s-kind";
+      stag.textContent = s.media.images.length + " 个结果";
+      media.appendChild(stag);
     }
 
     var info = document.createElement("div");
     info.className = "s-info";
     var no = document.createElement("div");
     no.className = "s-no";
-    no.textContent = (s.kind === "video" ? "视频" : "图像") + (s.prompt_lang === "zh" ? " · 中文提示词" : " · 英文提示词");
+    no.textContent = (s.kind === "video" ? "视频" : (s.kind === "set" ? "图生图" : "图像"))
+      + (s.prompt_lang === "zh" ? " · 中文提示词" : " · 英文提示词");
     var title = document.createElement("h3");
     title.className = "s-title";
     title.textContent = s.title;
@@ -414,12 +434,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   // 每类一个网格：列数按视口给，段内卡片比例一致所以天然等高
   var GROUPS = [
-    { id: "lotus", cols: [2, 2, 1], ar: "16 / 9" },
+    { id: "lotus", cols: [2, 2, 1], ar: "21 / 9" },
     { id: "video", cols: [3, 2, 1], ar: "16 / 9" },
     { id: "character", cols: [3, 2, 1], ar: "4 / 3" },
+    { id: "poster", cols: [4, 3, 2], ar: "3 / 4" },
     { id: "plate", cols: [5, 3, 2], ar: "9 / 16" }
   ];
   var GMETA = {};
+
+  // 数据里的分组顺序；没登记布局的组走默认列数
+  function groupOrder() {
+    var ids = Object.keys(GMETA);
+    return ids.length ? ids : GROUPS.map(function (g) { return g.id; });
+  }
 
   function colsForViewport(id) {
     var g = GROUPS.filter(function (x) { return x.id === id; })[0];
@@ -433,9 +460,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     $("empty").hidden = state.list.length > 0;
     if (!state.list.length) return;
 
-    var show = state.filter === "all"
-      ? GROUPS.map(function (g) { return g.id; })
-      : [state.filter];
+    var show = state.filter === "all" ? groupOrder() : [state.filter];
 
     var seq = 0;
     show.forEach(function (gid) {
@@ -490,8 +515,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   // ── 详情 ──
   function specRows(s) {
     var rows = [["模型", s.model_short], ["尺寸", s.size], ["比例", s.aspect],
-                ["种子", s.seed != null ? String(s.seed) : "—"],
-                ["类型", s.kind === "video" ? "视频 " + s.seconds + "s / " + s.frames + " 帧" : "图像"],
+                ["种子", s.seed != null ? String(s.seed) : (s.kind === "set" ? "未提供" : "—")],
+                ["类型", s.kind === "video" ? "视频 " + s.seconds + "s / " + s.frames + " 帧"
+                        : (s.kind === "set" ? "图生图 · " + ((s.media.images || []).length) + " 张结果" : "图像")],
                 ["提示词", s.prompt_lang === "zh" ? "中文原文" : "英文原文"]];
     var dl = $("v-spec");
     dl.textContent = "";
@@ -518,6 +544,45 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     });
   }
 
+
+  // 图集：一条提示词 × 多个结果（原照片不同），左右箭头 + 底部缩略图条
+  function renderGallery(s, idx) {
+    var stage = $("v-stage");
+    var imgs = s.media.images;
+    stage.textContent = "";
+    state.galIdx = idx;
+
+    var gal = document.createElement("div");
+    gal.className = "gal";
+    var prev = document.createElement("button");
+    prev.className = "gal-nav"; prev.type = "button"; prev.textContent = "←";
+    prev.setAttribute("aria-label", "上一个结果");
+    var img = document.createElement("img");
+    img.src = imgs[idx].full; img.alt = s.title + " 结果 " + (idx + 1);
+    var next = document.createElement("button");
+    next.className = "gal-nav"; next.type = "button"; next.textContent = "→";
+    next.setAttribute("aria-label", "下一个结果");
+    gal.append(prev, img, next);
+
+    var cap = document.createElement("div");
+    cap.className = "v-cap";
+    cap.textContent = "结果 " + (idx + 1) + " / " + imgs.length + " · 同一条提示词，不同原照片";
+    var strip = document.createElement("div");
+    strip.className = "gal-strip";
+    imgs.forEach(function (im, i) {
+      var b = document.createElement("button");
+      b.className = "gal-th" + (i === idx ? " on" : "");
+      b.type = "button";
+      b.style.backgroundImage = "url(" + im.thumb + ")";
+      b.setAttribute("aria-label", "结果 " + (i + 1));
+      b.addEventListener("click", function () { renderGallery(s, i); });
+      strip.appendChild(b);
+    });
+    stage.append(gal, cap, strip);
+    prev.addEventListener("click", function () { renderGallery(s, (idx - 1 + imgs.length) % imgs.length); });
+    next.addEventListener("click", function () { renderGallery(s, (idx + 1) % imgs.length); });
+  }
+
   function open(i) {
     state.idx = i;
     var s = state.list[i];
@@ -539,6 +604,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       cap.textContent = s.size + " · " + s.frames + " 帧 · " + s.seconds + "s · 静音自动播放";
       stage.appendChild(cap);
       var p = v.play(); if (p && p.catch) p.catch(function () {});
+    } else if (s.kind === "set" && s.media.images) {
+      renderGallery(s, 0);
     } else {
       var img = document.createElement("img");
       img.src = s.media.full || s.media.thumb;
@@ -550,7 +617,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       stage.appendChild(cap2);
     }
 
-    $("v-id").textContent = String(i + 1).padStart(2, "0") + " / " + state.list.length + " · " + (s.kind === "video" ? "VIDEO" : "IMAGE");
+    $("v-id").textContent = String(i + 1).padStart(2, "0") + " / " + state.list.length + " · "
+      + (s.kind === "video" ? "VIDEO" : (s.kind === "set" ? "SET" : "IMAGE"));
     $("v-title").textContent = s.title;
     $("v-sub").textContent = s.subtitle || "";
     specRows(s);
@@ -578,7 +646,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     tags.textContent = "";
     (s.tags || []).forEach(function (t) { var i2 = document.createElement("i"); i2.textContent = t; tags.appendChild(i2); });
     $("v-src").textContent = "来源：" + s.source;
-    $("v-count").textContent = s.kind === "video" ? "视频样本" : "图像样本";
+    $("v-count").textContent = s.kind === "video" ? "视频样本" : (s.kind === "set" ? "图集样本" : "图像样本");
     $("v-prev").disabled = i <= 0;
     $("v-next").disabled = i >= state.list.length - 1;
     resetCopy();
@@ -600,6 +668,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   }
 
   function step(d) {
+    var cur = state.list[state.idx];
+    if (cur && cur.kind === "set" && cur.media.images) {
+      renderGallery(cur, (state.galIdx + d + cur.media.images.length) % cur.media.images.length);
+      return;
+    }
     var n = state.idx + d;
     if (n < 0 || n >= state.list.length) return;
     open(n);
@@ -676,7 +749,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   window.addEventListener("resize", function () {
     clearTimeout(rt);
     rt = setTimeout(function () {
-      var sig = GROUPS.map(function (g) { return colsForViewport(g.id); }).join(",");
+      var sig = groupOrder().map(function (g) { return colsForViewport(g); }).join(",");
       if (sig !== state.cols) { state.cols = sig; render(); }
     }, 160);
   });

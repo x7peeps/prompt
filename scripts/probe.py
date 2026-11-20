@@ -44,6 +44,7 @@ def static_checks():
         report["n_tabs"] = len(gids) + 1  # 各分段 + 「全部」
     report["has_motion"] = sum(1 for s in samples if (s.get("motion") or {}).get("prompt"))
     report["data"] = {"n": len(samples), "models": data["models"],
+                      "groups": {g["id"]: sum(1 for s in samples if s.get("group") == g["id"]) for g in data.get("groups", [])},
                       "kinds": {k: sum(1 for s in samples if s["kind"] == k) for k in ("image", "video")}}
     if any("H3 Ref2VA" in m for m in data["models"]):
         bad("data: 模型名出现空格变体（应为 H3-Ref2VA）")
@@ -65,8 +66,8 @@ def static_checks():
     og = os.path.join(ROOT, "og.jpg")
     if not os.path.exists(og) or os.path.getsize(og) > 300_000:
         bad(f"html: og.jpg 缺失或过大（{os.path.getsize(og)//1024 if os.path.exists(og) else 'missing'}KB）")
-    if 'createElement("button")' in html:
-        bad("html: 卡片仍用 <button> 承载块级内容")
+    if 'createElement("a")' not in html:
+        bad("html: 卡片未用 <a>（<button> 不能承载 h3/p 等块级内容）")
     if "aria-selected" in html:
         bad("html: 仍有 aria-selected（筛选器应为 aria-pressed）")
     report["static"] = "checked"

@@ -292,12 +292,39 @@ for m in LOTUS_META:
     samples.append(dict(
         id=m["sid"], kind="image", title=m["title"], subtitle=m["sub"],
         model="MiniMax H3-Image", model_short="H3-Image",
-        size=f"{w}×{h}", aspect="16:9", seed=5285, seconds=None, frames=None,
+        size=f"{w}×{h}", aspect="21:9", seed=5285, seconds=None, frames=None,
         prompt=prompt, prompt_lang="zh", lang_label="中文提示词 · 原稿改编",
         note=m["note"], tags=m["tags"], group="lotus",
         media=dict(full=f"assets/img/{full.name}", thumb=f"assets/img/{thumb.name}", video=None, poster=None),
         motion=m["motion"],
         source="老大收集 · 荷塘巨物四机位 · 4090 H3-Image 复现（6272×2688 / seed 5285）",
+    ))
+
+
+
+# ── 4. 技法样本：一条提示词 × 15 个结果（照片转海报）──
+POSTER_PROMPT = """请将我上传的照片制作成一张 3:4 竖版诗意复古印刷海报。先观察照片，选择最有辨识度、适合向上延伸的主体，保留原照片的关键场景、视角、姿态和主体关系，不随意增添物体。上方约三分之一为干净的暖白纸色留白，放置两段与照片情绪呼应的简短英文诗句，使用克制的小号打字机字体。中部根据照片主题，自选一个简短英文单词，以横跨画面的巨大高对比衬线大写字呈现。让真实摄影主体从下方原场景自然向上延伸，穿过大字、遮挡部分笔画，并明显越过字顶进入暖白留白。主体必须与原场景保持连接、比例正常；优先调整文字位置和取景，不要拉长头颈、扭曲身体或制造漂浮物。遮挡适量，保持单词清晰可读。整张海报应是连续画面。利用主体轮廓、光线、背景色与网点疏密，让照片在字间及主体周围自然衔接留白，避免上下矩形拼接、笔直横切边、抠图白边和生硬渐变。大字颜色从照片的花瓣、果实、枝叶、墙面、羽毛或水色中提取，与画面主色协调且保持可读对比，不固定使用蓝色。小诗和细节标记采用同色系深色。依据原图强化适合的光色情绪，同时保留照片辨识度。在大字与风格化照片内部加入细密、清晰可见的圆形彩色印刷网点，青、洋红、黄等墨点可轻微错位，暗密亮疏。整体像复古杂志的彩色半调印刷，而非普通噪点或划痕；主体仍保持真实摄影材质，上方暖白相对干净。右上角放一张宽约占画面 15%–18% 的原始照片缩略图，完整展示原图、保持比例、不裁切、不调色，配细边框及准确的“ORIGINAL”标注，避开诗句与主体。整体克制、诗意，英文准确，无额外标题、新增水印或无关装饰。只输出一张完整海报，不要拼图或样机。"""
+
+POSTER_NOTE = """这条提示词最值得学的不是文案，是它把「照片改成海报」拆成了三组互相独立、各自可验证的约束。第一组是构图：上方三分之一暖白留白、大字横跨画面、主体要穿字并越过字顶进入留白。第二组是反面清单：不拉长头颈、不扭曲身体、不抠图白边、不上下矩形拼接、只输出一张不要拼图。第三组是质感：圆形彩色印刷网点而不是噪点划痕，大字颜色从照片里取而不是固定蓝色。第二组里「主体必须与原场景保持连接，优先调整文字位置和取景」这一句最关键——图生图最容易翻车的地方就是模型为了满足「主体越过字顶」而去拉伸身体，这句话把变形责任推给了构图而不是模型。"""
+
+poster_imgs = []
+for _i in range(1, 16):
+    _t = IMG / f"poster-{_i:02d}-t.jpg"
+    _f = IMG / f"poster-{_i:02d}-f.jpg"
+    if _t.exists() and _f.exists():
+        poster_imgs.append({"thumb": f"assets/img/{_t.name}", "full": f"assets/img/{_f.name}"})
+
+if poster_imgs:
+    samples.append(dict(
+        id="p-poster", kind="set", group="poster",
+        title="照片转复古半调海报", subtitle="一条提示词，15 张不同原照片的结果",
+        model="图生图（原作者未标注模型）", model_short="图生图",
+        size="3:4", aspect="3:4", seed=None, seconds=None, frames=None,
+        prompt=POSTER_PROMPT, prompt_lang="zh", lang_label="中文提示词",
+        note=POSTER_NOTE, tags=["图生图", "海报", "半调印刷", "一条多结果"],
+        media=dict(full=poster_imgs[0]["full"], thumb=poster_imgs[0]["thumb"],
+                   video=None, poster=None, images=poster_imgs),
+        source="抖音 @Cooper说 · 作品 7702745040682758223 · 提示词原文照录",
     ))
 
 out = ROOT / "data/samples.json"
@@ -309,6 +336,7 @@ payload = {
         {"id": "lotus", "label": "荷塘四机位", "note": "同一场景四个机位：水下仰拍 → 高空俯拍 → 中景 → 近景；四条各自独立生成（未锁参考图），人、狗与服装不跨镜一致"},
         {"id": "character", "label": "人物资产", "note": "三视图：同一人、同一光位、三格完整全身"},
         {"id": "video", "label": "动作镜头", "note": "图生视频：起始状态 → 动作 → 结束状态"},
+        {"id": "poster", "label": "照片转海报", "note": "图生图：一条提示词 × 15 张原照片"},
         {"id": "plate", "label": "壁纸与场景", "note": "竖版 9:16：12 张 8K 风景 + 1 个短剧场景"},
     ],
     "samples": samples,
